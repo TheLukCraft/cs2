@@ -1,5 +1,6 @@
 ﻿using Application.Dto;
 using Application.Interfaces;
+using AutoMapper;
 using Domain.Interfaces;
 
 namespace Application.Services
@@ -7,32 +8,24 @@ namespace Application.Services
     public class PostService : IPostService
     {
         private readonly IPostRepository postRepository;
+        private readonly IMapper mapper;
 
-        public PostService(IPostRepository postRepository)
+        public PostService(IPostRepository postRepository, IMapper mapper)
         {
             this.postRepository = postRepository;
+            this.mapper = mapper;
         }
 
         public IEnumerable<PostDto> GetAllPosts()
         {
             var posts = postRepository.GetAll();
-            return posts.Select(post => new PostDto
-            {
-                Id = post.Id,
-                Title = post.Title,
-                Content = post.Content
-            });
+            return mapper.Map<IEnumerable<PostDto>>(posts);
         }
 
         public PostDto GetPostById(int id)
         {
             var post = postRepository.GetById(id);
-            return new PostDto()
-            {
-                Id = post.Id,
-                Title = post.Title,
-                Content = post.Content
-            };
+            return mapper.Map<PostDto>(post);
         }
     }
 }
