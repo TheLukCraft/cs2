@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
+using Application.Dto;
 
 namespace WebAPI.Controllers
 {
@@ -33,6 +34,14 @@ namespace WebAPI.Controllers
                 return NotFound();
 
             return Ok(post);
+        }
+
+        [SwaggerOperation(Summary = "Create a new post")]
+        [HttpPost()]
+        public IActionResult Create(CreatePostDto newPost)
+        {
+            var post = postService.AddNewPost(newPost);
+            return Created($"posts/{post.Id}", post);
         }
     }
 }
