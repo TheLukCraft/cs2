@@ -39,5 +39,12 @@ namespace Application.Services
             postRepository.Add(post);
             return mapper.Map<PostDto>(post);
         }
+
+        public void UpdatePost(UpdatePostDto updatePost)
+        {
+            var existingPost = postRepository.GetById(updatePost.Id);
+            var post = mapper.Map(updatePost, existingPost);
+            postRepository.Updated(post);
+        }
     }
 }

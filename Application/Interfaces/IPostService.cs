@@ -10,5 +10,7 @@ namespace Application.Interfaces
         PostDto GetPostById(int id);
 
         PostDto AddNewPost(CreatePostDto newPost);
+
+        void UpdatePost(UpdatePostDto updatePost);
     }
 }
