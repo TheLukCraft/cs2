@@ -17,40 +17,40 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
+        public IEnumerable<PostDto> GetAllPosts()
         {
-            var posts = await postRepository.GetAllAsync();
+            var posts = postRepository.GetAll();
             return mapper.Map<IEnumerable<PostDto>>(posts);
         }
 
-        public async Task<PostDto> GetPostByIdAsync(int id)
+        public PostDto GetPostById(int id)
         {
-            var post = await postRepository.GetByIdAsync(id);
+            var post = postRepository.GetById(id);
             return mapper.Map<PostDto>(post);
         }
 
-        public async Task<PostDto> AddNewPostAsync(CreatePostDto newPost)
+        public PostDto AddNewPost(CreatePostDto newPost)
         {
             if (string.IsNullOrEmpty(newPost.Title))
             {
                 throw new Exception("Post can not have an empty title.");
             }
             var post = mapper.Map<Post>(newPost);
-            var result = await postRepository.AddAsync(post);
-            return mapper.Map<PostDto>(result);
+            postRepository.Add(post);
+            return mapper.Map<PostDto>(post);
         }
 
-        public async Task UpdatePostAsync(UpdatePostDto updatePost)
+        public void UpdatePost(UpdatePostDto updatePost)
         {
-            var existingPost = await postRepository.GetByIdAsync(updatePost.Id);
+            var existingPost = postRepository.GetById(updatePost.Id);
             var post = mapper.Map(updatePost, existingPost);
-            postRepository.UpdatedAsync(post);
+            postRepository.Updated(post);
         }
 
-        public async Task DeletePostAsync(int id)
+        public void DeletePost(int id)
         {
-            var post = await postRepository.GetByIdAsync(id);
-            await postRepository.DeleteAsync(post);
+            var post = postRepository.GetById(id);
+            postRepository.Delete(post);
         }
     }
 }

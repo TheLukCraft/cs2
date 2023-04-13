@@ -20,17 +20,17 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Retrieves all posts")]
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
-            var posts = await postService.GetAllPostsAsync();
+            var posts = postService.GetAllPosts();
             return Ok(posts);
         }
 
         [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public IActionResult Get(int id)
         {
-            var post = await postService.GetPostByIdAsync(id);
+            var post = postService.GetPostById(id);
             if (post == null)
                 return NotFound();
 
@@ -39,25 +39,25 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Create a new post")]
         [HttpPost()]
-        public async Task<IActionResult> Create(CreatePostDto newPost)
+        public IActionResult Create(CreatePostDto newPost)
         {
-            var post = await postService.AddNewPostAsync(newPost);
+            var post = postService.AddNewPost(newPost);
             return Created($"posts/{post.Id}", post);
         }
 
         [SwaggerOperation(Summary = "Update a existing post")]
         [HttpPut()]
-        public async Task<IActionResult> Update(UpdatePostDto updatePost)
+        public IActionResult Update(UpdatePostDto updatePost)
         {
-            await postService.UpdatePostAsync(updatePost);
+            postService.UpdatePost(updatePost);
             return NoContent();
         }
 
         [SwaggerOperation(Summary = "Delete a specific post")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            await postService.DeletePostAsync(id);
+            postService.DeletePost(id);
             return NoContent();
         }
     }
