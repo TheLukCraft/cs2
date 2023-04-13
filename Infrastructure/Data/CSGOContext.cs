@@ -12,7 +12,7 @@ namespace Infrastructure.Data
 
         public DbSet<Post>? Posts { get; set; }
 
-        public override int SaveChanges()
+        public async Task<int> SaveChangesAsync()
         {
             var entries = ChangeTracker
                 .Entries()
@@ -28,7 +28,7 @@ namespace Infrastructure.Data
                 }
             }
 
-            return base.SaveChanges();
+            return await base.SaveChangesAsync();
         }
     }
 }
