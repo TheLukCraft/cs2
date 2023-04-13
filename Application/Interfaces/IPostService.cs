@@ -12,7 +12,5 @@ namespace Application.Interfaces
         PostDto AddNewPost(CreatePostDto newPost);
 
         void UpdatePost(UpdatePostDto updatePost);
-
-        void DeletePost(int id);
     }
 }

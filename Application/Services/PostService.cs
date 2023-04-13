@@ -46,11 +46,5 @@ namespace Application.Services
             var post = mapper.Map(updatePost, existingPost);
             postRepository.Updated(post);
         }
-
-        public void DeletePost(int id)
-        {
-            var post = postRepository.GetById(id);
-            postRepository.Delete(post);
-        }
     }
 }
