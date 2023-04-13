@@ -1,6 +1,8 @@
+using Application.Dto.Cosmos;
 using Application.Interfaces;
 using Application.Mappings;
 using Application.Services;
+using Domain.Entities.Cosmos;
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -25,7 +27,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddApiVersioning(x =>
 {
-    x.DefaultApiVersion = new ApiVersion(1, 0);
+    x.DefaultApiVersion = new ApiVersion(1, 1);
     x.AssumeDefaultVersionWhenUnspecified = true;
     x.ReportApiVersions = true;
     x.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
@@ -33,6 +35,12 @@ builder.Services.AddApiVersioning(x =>
 builder.Services.AddDbContext<CSGOContext>(
     option => option.UseSqlServer(builder.Configuration.GetConnectionString("CSGODb"))
     );
+
+builder.Services.AddScoped<ICosmosPostRepository, CosmosPostRepository>();
+builder.Services.AddScoped<IcosmosPostService, CosmosPostService>();
+builder.Services.AddScoped<CosmosPost, CosmosPostDto>();
+builder.Services.AddScoped<CreateCosmosPostDto, CosmosPost>();
+builder.Services.AddScoped<UpdateCosmosPostDto, CosmosPost>();
 
 var app = builder.Build();
 
