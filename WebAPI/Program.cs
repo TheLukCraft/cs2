@@ -1,24 +1,14 @@
-using Application.Interfaces;
-using Application.Mappings;
-using Application.Services;
-using Domain.Interfaces;
 using Infrastructure.Data;
-using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using WebAPI.Installers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.InstallServicesInAssembly(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.EnableAnnotations();
-});
 
 builder.Services.AddApiVersioning(x =>
 {
@@ -32,8 +22,6 @@ builder.Services.AddDbContext<CSGOContext>(
     );
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -41,8 +29,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Configure the HTTP request pipeline.
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();
