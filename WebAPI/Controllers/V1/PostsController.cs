@@ -22,17 +22,18 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Retrieves all posts")]
         [HttpGet]
-        public IActionResult Get([FromQuery]PaginationFilter paginationFilter)
+        public async Task<IActionResult> Get([FromQuery] PaginationFilter paginationFilter)
         {
-            var posts = postService.GetAllPosts();
+            var validPaginationFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
+            var posts = await postService.GetAllPostsAsync();
             return Ok(new Response<IEnumerable<PostDto>>(posts));
         }
 
         [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var post = postService.GetPostById(id);
+            var post = await postService.GetPostByIdAsync(id);
             if (post == null)
                 return NotFound();
 
@@ -41,25 +42,25 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Create a new post")]
         [HttpPost()]
-        public IActionResult Create(CreatePostDto newPost)
+        public async Task<IActionResult> Create(CreatePostDto newPost)
         {
-            var post = postService.AddNewPost(newPost);
+            var post = await postService.AddNewPostAsync(newPost);
             return Created($"posts/{post.Id}", new Response<PostDto>(post));
         }
 
         [SwaggerOperation(Summary = "Update a existing post")]
         [HttpPut()]
-        public IActionResult Update(UpdatePostDto updatePost)
+        public async Task<IActionResult> Update(UpdatePostDto updatePost)
         {
-            postService.UpdatePost(updatePost);
+            await postService.UpdatePostAsync(updatePost);
             return NoContent();
         }
 
         [SwaggerOperation(Summary = "Delete a specific post")]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            postService.DeletePost(id);
+            await postService.DeletePostAsync(id);
             return NoContent();
         }
     }

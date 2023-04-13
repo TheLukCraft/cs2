@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -13,33 +14,35 @@ namespace Infrastructure.Repositories
             this.context = context;
         }
 
-        public IEnumerable<Post> GetAll()
+        public async Task<IEnumerable<Post>> GetAllAsync()
         {
-            return context.Posts;
+            return await context.Posts.ToListAsync();
         }
 
-        public Post GetById(int id)
+        public async Task<Post> GetByIdAsync(int id)
         {
-            return context.Posts.SingleOrDefault(x => x.Id == id);
+            return await context.Posts.SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public Post Add(Post post)
+        public async Task<Post> AddAsync(Post post)
         {
-            context.Posts.Add(post);
-            context.SaveChanges();
-            return post;
+            var createdPost = await context.Posts.AddAsync(post);
+            await context.SaveChangesAsync();
+            return createdPost.Entity;
         }
 
-        public void Updated(Post post)
+        public async Task UpdatedAsync(Post post)
         {
             context.Posts.Update(post);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
 
-        public void Delete(Post post)
+        public async Task DeleteAsync(Post post)
         {
             context.Posts.Remove(post);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
     }
 }
