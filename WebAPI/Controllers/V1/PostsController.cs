@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using Application.Dto;
+using WebAPI.Wrappers;
+using WebAPI.Filters;
 
 namespace WebAPI.Controllers.V1
 {
@@ -20,10 +22,10 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Retrieves all posts")]
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery]PaginationFilter paginationFilter)
         {
             var posts = postService.GetAllPosts();
-            return Ok(posts);
+            return Ok(new Response<IEnumerable<PostDto>>(posts));
         }
 
         [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]
@@ -34,7 +36,7 @@ namespace WebAPI.Controllers.V1
             if (post == null)
                 return NotFound();
 
-            return Ok(post);
+            return Ok(new Response<PostDto>(post));
         }
 
         [SwaggerOperation(Summary = "Create a new post")]
@@ -42,7 +44,7 @@ namespace WebAPI.Controllers.V1
         public IActionResult Create(CreatePostDto newPost)
         {
             var post = postService.AddNewPost(newPost);
-            return Created($"posts/{post.Id}", post);
+            return Created($"posts/{post.Id}", new Response<PostDto>(post));
         }
 
         [SwaggerOperation(Summary = "Update a existing post")]
