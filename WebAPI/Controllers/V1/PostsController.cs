@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using Application.Dto;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.V1
 {
-    [ApiController]
     [Route("[controller]")]
+    [ApiVersion("1.0")]
+    [ApiController]
     public class PostsController : ControllerBase
     {
         private readonly IPostService postService;
