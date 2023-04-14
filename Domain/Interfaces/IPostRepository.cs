@@ -4,6 +4,8 @@ namespace Domain.Interfaces
 {
     public interface IPostRepository
     {
+        IQueryable<Post> GetAll();
+
         Task<IEnumerable<Post>> GetAllAsync(int pageNumber, int pageSize);
 
         Task<int> GetAllCountAsync();
