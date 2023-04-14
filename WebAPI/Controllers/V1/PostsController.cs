@@ -6,6 +6,7 @@ using Application.Dto;
 using WebAPI.Wrappers;
 using WebAPI.Filters;
 using WebAPI.Helpers;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers.V1
 {
@@ -30,6 +31,14 @@ namespace WebAPI.Controllers.V1
             var totalRecords = await postService.GetAllPostsCountAsync();
 
             return Ok(PaginationHelper.CreatePagedResponse(posts, validPaginationFilter, totalRecords));
+        }
+
+        [SwaggerOperation(Summary = "Retrieves all posts")]
+        [EnableQuery]
+        [HttpGet("[action]")]
+        public ActionResult<IQueryable<PostDto>> GetAll()
+        {
+            return Ok(postService.GetAllPosts());
         }
 
         [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]

@@ -2,6 +2,7 @@
 using Application;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData;
 
 namespace WebAPI.Installers
 {
@@ -11,7 +12,11 @@ namespace WebAPI.Installers
         {
             services.AddApplication();
             services.AddInfrastructure();
-            services.AddControllers();
+            services.AddControllers()
+            .AddOData(options => options
+            .Select()
+            .Filter()
+            .OrderBy());
             services.AddApiVersioning(x =>
             {
                 x.DefaultApiVersion = new ApiVersion(1, 0);
