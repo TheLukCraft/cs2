@@ -23,15 +23,15 @@ namespace Application.Services
             return mapper.ProjectTo<PostDto>(posts);
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize, string sortField, bool ascending)
+        public async Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy)
         {
-            var posts = await postRepository.GetAllAsync(pageNumber, pageSize, sortField, ascending);
+            var posts = await postRepository.GetAllAsync(pageNumber, pageSize, sortField, ascending, filterBy);
             return mapper.Map<IEnumerable<PostDto>>(posts);
         }
 
-        public async Task<int> GetAllPostsCountAsync()
+        public async Task<int> GetAllPostsCountAsync(string filterBy)
         {
-            return await postRepository.GetAllCountAsync();
+            return await postRepository.GetAllCountAsync(filterBy);
         }
 
         public async Task<PostDto> GetPostByIdAsync(int id)
