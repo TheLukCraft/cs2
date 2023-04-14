@@ -6,7 +6,7 @@ namespace Application.Interfaces
     {
         IQueryable<PostDto> GetAllPosts();
 
-        Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize);
+        Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize, string sortField, bool ascending);
 
         Task<int> GetAllPostsCountAsync();
 

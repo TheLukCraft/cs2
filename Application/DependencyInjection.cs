@@ -1,6 +1,8 @@
-﻿using Application.Interfaces;
+﻿using Application.Dto;
+using Application.Interfaces;
 using Application.Mappings;
 using Application.Services;
+using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application

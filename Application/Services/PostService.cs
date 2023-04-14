@@ -23,9 +23,9 @@ namespace Application.Services
             return mapper.ProjectTo<PostDto>(posts);
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize, string sortField, bool ascending)
         {
-            var posts = await postRepository.GetAllAsync(pageNumber, pageSize);
+            var posts = await postRepository.GetAllAsync(pageNumber, pageSize, sortField, ascending);
             return mapper.Map<IEnumerable<PostDto>>(posts);
         }
 
