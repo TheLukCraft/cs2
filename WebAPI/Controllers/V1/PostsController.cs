@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using Application.Dto;
 using WebAPI.Wrappers;
 using WebAPI.Filters;
+using WebAPI.Helpers;
 
 namespace WebAPI.Controllers.V1
 {
@@ -25,8 +26,10 @@ namespace WebAPI.Controllers.V1
         public async Task<IActionResult> Get([FromQuery] PaginationFilter paginationFilter)
         {
             var validPaginationFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
-            var posts = await postService.GetAllPostsAsync();
-            return Ok(new Response<IEnumerable<PostDto>>(posts));
+            var posts = await postService.GetAllPostsAsync(validPaginationFilter.PageNumber, validPaginationFilter.PageSize);
+            var totalRecords = await postService.GetAllPostsCountAsync();
+
+            return Ok(PaginationHelper.CreatePagedResponse(posts, validPaginationFilter, totalRecords));
         }
 
         [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]

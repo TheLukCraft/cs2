@@ -14,9 +14,14 @@ namespace Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<Post>> GetAllAsync()
+        public async Task<IEnumerable<Post>> GetAllAsync(int pageNumber, int pageSize)
         {
-            return await context.Posts.ToListAsync();
+            return await context.Posts.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        }
+
+        public async Task<int> GetAllCountAsync()
+        {
+            return await context.Posts.CountAsync();
         }
 
         public async Task<Post> GetByIdAsync(int id)
