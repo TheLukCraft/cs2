@@ -17,12 +17,6 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public IQueryable<PostDto> GetAllPosts()
-        {
-            var posts = postRepository.GetAll();
-            return mapper.ProjectTo<PostDto>(posts);
-        }
-
         public async Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize)
         {
             var posts = await postRepository.GetAllAsync(pageNumber, pageSize);
