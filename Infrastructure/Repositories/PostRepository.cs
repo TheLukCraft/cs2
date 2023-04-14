@@ -1,43 +1,58 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
     public class PostRepository : IPostRepository
     {
-        private static readonly ISet<Post> posts = new HashSet<Post>()
-        {
-            new Post(1, "test 1", "treść 1"),
-            new Post(2, "test 2", "treść 2"),
-            new Post(3, "test 3", "treść 3"),
-        };
+        private readonly CSGOContext context;
 
-        public IEnumerable<Post> GetAll()
+        public PostRepository(CSGOContext context)
         {
-            return posts;
+            this.context = context;
         }
 
-        public Post GetById(int id)
+        public IQueryable<Post> GetAll()
         {
-            return posts.SingleOrDefault(x => x.Id == id);
+            return context.Posts.AsQueryable();
         }
 
-        public Post Add(Post post)
+        public async Task<IEnumerable<Post>> GetAllAsync(int pageNumber, int pageSize)
         {
-            post.Id = posts.Count() + 1;
-            post.Created = DateTime.UtcNow;
-            posts.Add(post);
-            return post;
+            return await context.Posts.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
-        public void Updated(Post post)
+        public async Task<int> GetAllCountAsync()
         {
-            post.LastModified = DateTime.UtcNow;
+            return await context.Posts.CountAsync();
         }
 
-        public void Delete(Post post)
+        public async Task<Post> GetByIdAsync(int id)
         {
-            posts.Remove(post);
+            return await context.Posts.SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Post> AddAsync(Post post)
+        {
+            var createdPost = await context.Posts.AddAsync(post);
+            await context.SaveChangesAsync();
+            return createdPost.Entity;
+        }
+
+        public async Task UpdatedAsync(Post post)
+        {
+            context.Posts.Update(post);
+            await context.SaveChangesAsync();
+            await Task.CompletedTask;
+        }
+
+        public async Task DeleteAsync(Post post)
+        {
+            context.Posts.Remove(post);
+            await context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
     }
 }
