@@ -69,8 +69,9 @@ namespace WebAPI.Controllers.V1
             var user = await userManager.FindByNameAsync(login.UserName);
             if (user != null && await userManager.CheckPasswordAsync(user, login.Password))
             {
-                var authCalims = new List<Claim>
+                var authClaims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
@@ -79,7 +80,7 @@ namespace WebAPI.Controllers.V1
 
                 var token = new JwtSecurityToken(
                     expires: DateTime.UtcNow.AddHours(2),
-                    claims: authCalims,
+                    claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 

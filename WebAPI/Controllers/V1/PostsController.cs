@@ -7,11 +7,14 @@ using WebAPI.Wrappers;
 using WebAPI.Filters;
 using WebAPI.Helpers;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace WebAPI.Controllers.V1
 {
     [Route("[controller]")]
     [ApiVersion("1.0")]
+    [Authorize]
     [ApiController]
     public class PostsController : ControllerBase
     {
@@ -29,7 +32,8 @@ namespace WebAPI.Controllers.V1
             return Ok(SortingHelper.GetSortField().Select(x => x.Key));
         }
 
-        [SwaggerOperation(Summary = "Retrieves all posts")]
+        [SwaggerOperation(Summary = "Retrieves paged posts")]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] PaginationFilter paginationFilter, [FromQuery] SortingFilter sortingFilter, [FromQuery] string filterBy = "")
         {
@@ -52,6 +56,7 @@ namespace WebAPI.Controllers.V1
         }
 
         [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -66,7 +71,7 @@ namespace WebAPI.Controllers.V1
         [HttpPost()]
         public async Task<IActionResult> Create(CreatePostDto newPost)
         {
-            var post = await postService.AddNewPostAsync(newPost);
+            var post = await postService.AddNewPostAsync(newPost, User.FindFirstValue(ClaimTypes.NameIdentifier));
             return Created($"posts/{post.Id}", new Response<PostDto>(post));
         }
 
@@ -74,6 +79,14 @@ namespace WebAPI.Controllers.V1
         [HttpPut()]
         public async Task<IActionResult> Update(UpdatePostDto updatePost)
         {
+            var userOwnsPost = await postService.UserOwnsPostAsync(updatePost.Id, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (!userOwnsPost)
+                return BadRequest(new Response<bool>()
+                {
+                    Succeeded = false,
+                    Message = "You do not own this post"
+                });
+
             await postService.UpdatePostAsync(updatePost);
             return NoContent();
         }
@@ -82,6 +95,13 @@ namespace WebAPI.Controllers.V1
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var userOwnsPost = await postService.UserOwnsPostAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (!userOwnsPost)
+                return BadRequest(new Response<bool>()
+                {
+                    Succeeded = false,
+                    Message = "You do not own this post"
+                });
             await postService.DeletePostAsync(id);
             return NoContent();
         }

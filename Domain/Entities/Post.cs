@@ -17,6 +17,9 @@ namespace Domain.Entities
         [Required]
         [MaxLength(2000)]
         public string? Content { get; set; }
+        [Required]
+        [MaxLength(450)]
+        public string UserId { get; set; }
 
         public Post()
         {

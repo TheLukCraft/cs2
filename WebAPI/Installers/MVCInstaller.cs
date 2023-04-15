@@ -3,6 +3,7 @@ using Application;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
+using Application.Services;
 
 namespace WebAPI.Installers
 {
@@ -24,6 +25,7 @@ namespace WebAPI.Installers
                 x.ReportApiVersions = true;
                 //x.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
             });
+            services.AddTransient<UserResloverService>();
         }
     }
 }

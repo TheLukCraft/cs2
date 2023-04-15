@@ -1,4 +1,5 @@
-﻿using Domain.Common;
+﻿using Application.Services;
+using Domain.Common;
 using Domain.Entities;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -8,8 +9,11 @@ namespace Infrastructure.Data
 {
     public class CSGOContext : IdentityDbContext<ApplicationUser>
     {
-        public CSGOContext(DbContextOptions<CSGOContext> options) : base(options)
+        private readonly UserResloverService userService;
+
+        public CSGOContext(DbContextOptions<CSGOContext> options, UserResloverService userService) : base(options)
         {
+            this.userService = userService;
         }
 
         public DbSet<Post>? Posts { get; set; }
@@ -23,10 +27,12 @@ namespace Infrastructure.Data
             foreach (var entityEntry in entries)
             {
                 ((AuditableEntity)entityEntry.Entity).LastModified = DateTime.UtcNow;
+                ((AuditableEntity)entityEntry.Entity).LastModifiedBy = userService.GetUser();
 
                 if (entityEntry.State == EntityState.Added)
                 {
                     ((AuditableEntity)entityEntry.Entity).Created = DateTime.UtcNow;
+                    ((AuditableEntity)entityEntry.Entity).CreatedBy = userService.GetUser();
                 }
             }
 

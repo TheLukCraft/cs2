@@ -30,6 +30,7 @@ namespace WebAPI.Installers
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
                 };
             });
+            services.AddAuthorization();
         }
     }
 }
