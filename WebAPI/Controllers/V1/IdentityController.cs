@@ -1,6 +1,11 @@
 ﻿using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OData.UriParser;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using WebAPI.Models;
 using WebAPI.Wrappers;
 
@@ -55,6 +60,36 @@ namespace WebAPI.Controllers.V1
                 Succeeded = true,
                 Message = "User created successfully!"
             });
+        }
+
+        [HttpPost()]
+        [Route("Login")]
+        public async Task<IActionResult> Login(LoginModel login)
+        {
+            var user = await userManager.FindByNameAsync(login.UserName);
+            if (user != null && await userManager.CheckPasswordAsync(user, login.Password))
+            {
+                var authCalims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                };
+
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
+
+                var token = new JwtSecurityToken(
+                    expires: DateTime.UtcNow.AddHours(2),
+                    claims: authCalims,
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                    );
+
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo
+                });
+            }
+            return Unauthorized();
         }
     }
 }
