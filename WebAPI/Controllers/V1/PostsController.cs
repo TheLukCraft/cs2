@@ -9,6 +9,7 @@ using WebAPI.Helpers;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Infrastructure.Identity;
 
 namespace WebAPI.Controllers.V1
 {
@@ -48,6 +49,7 @@ namespace WebAPI.Controllers.V1
         }
 
         [SwaggerOperation(Summary = "Retrieves all posts")]
+        [Authorize(Roles = UserRoles.Admin)]
         [EnableQuery]
         [HttpGet("[action]")]
         public ActionResult<IQueryable<PostDto>> GetAll()
@@ -68,6 +70,7 @@ namespace WebAPI.Controllers.V1
         }
 
         [SwaggerOperation(Summary = "Create a new post")]
+        [Authorize(Roles = UserRoles.User)]
         [HttpPost()]
         public async Task<IActionResult> Create(CreatePostDto newPost)
         {
@@ -76,6 +79,7 @@ namespace WebAPI.Controllers.V1
         }
 
         [SwaggerOperation(Summary = "Update a existing post")]
+        [Authorize(Roles = UserRoles.User)]
         [HttpPut()]
         public async Task<IActionResult> Update(UpdatePostDto updatePost)
         {
@@ -92,11 +96,14 @@ namespace WebAPI.Controllers.V1
         }
 
         [SwaggerOperation(Summary = "Delete a specific post")]
+        [Authorize(Roles = UserRoles.AdminOrUser)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var userOwnsPost = await postService.UserOwnsPostAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            if (!userOwnsPost)
+            var isAdmin = User.FindFirstValue(ClaimTypes.Role).Contains(UserRoles.Admin);
+
+            if (!isAdmin && !userOwnsPost)
                 return BadRequest(new Response<bool>()
                 {
                     Succeeded = false,
