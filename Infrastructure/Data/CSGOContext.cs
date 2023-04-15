@@ -1,12 +1,14 @@
 ﻿using Domain.Common;
 using Domain.Entities;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class CSGOContext : DbContext
+    public class CSGOContext : IdentityDbContext<ApplicationUser>
     {
-        public CSGOContext(DbContextOptions options) : base(options)
+        public CSGOContext(DbContextOptions<CSGOContext> options) : base(options)
         {
         }
 
