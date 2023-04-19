@@ -1,6 +1,10 @@
-﻿using Infrastructure.Identity;
+﻿using Application.Interfaces;
+using Domain.Enums;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.UriParser;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,12 +22,14 @@ namespace WebAPI.Controllers.V1
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration configuration;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IEmailSenderService emailSenderService;
 
-        public IdentityController(UserManager<ApplicationUser> userManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
+        public IdentityController(UserManager<ApplicationUser> userManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager, IEmailSenderService emailSenderService)
         {
             this.userManager = userManager;
             this.configuration = configuration;
             this.roleManager = roleManager;
+            this.emailSenderService = emailSenderService;
         }
 
         [HttpPost()]
@@ -61,12 +67,15 @@ namespace WebAPI.Controllers.V1
 
             await userManager.AddToRoleAsync(user, UserRoles.User);
 
+            await emailSenderService.Send(user.Email, "Registration confirmation", EmailTemplate.WelcomeMessage, user);
+
             return Ok(new Response<bool>
             {
                 Succeeded = true,
                 Message = "User created successfully!"
             });
         }
+
         [HttpPost()]
         [Route("RegisterAdmin")]
         public async Task<IActionResult> RegisterAdmin(RegisterModel register)
