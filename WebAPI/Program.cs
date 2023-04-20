@@ -1,6 +1,7 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Installers;
+using WebAPI.Middelwares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ErrorHandlingMiddelware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
