@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using Application.Dto.Post;
 
 namespace Application.Interfaces
 {

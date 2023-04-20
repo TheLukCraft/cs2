@@ -1,8 +1,6 @@
-﻿using Application.Dto;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Application.Mappings;
 using Application.Services;
-using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -13,6 +11,7 @@ namespace Application
         {
             services.AddScoped<IPostService, PostService>();
             services.AddSingleton(AutoMapperConfig.Initialize());
+            services.AddScoped<IPictureService, PictureService>();
 
             return services;
         }

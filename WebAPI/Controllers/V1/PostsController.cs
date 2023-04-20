@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
-using Application.Dto;
 using WebAPI.Wrappers;
 using WebAPI.Filters;
 using WebAPI.Helpers;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Infrastructure.Identity;
+using Application.Dto.Post;
 
 namespace WebAPI.Controllers.V1
 {
@@ -85,11 +85,7 @@ namespace WebAPI.Controllers.V1
         {
             var userOwnsPost = await postService.UserOwnsPostAsync(updatePost.Id, User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (!userOwnsPost)
-                return BadRequest(new Response<bool>()
-                {
-                    Succeeded = false,
-                    Message = "You do not own this post"
-                });
+                return BadRequest(new Response(false, "You do not own this post"));
 
             await postService.UpdatePostAsync(updatePost);
             return NoContent();
@@ -104,11 +100,8 @@ namespace WebAPI.Controllers.V1
             var isAdmin = User.FindFirstValue(ClaimTypes.Role).Contains(UserRoles.Admin);
 
             if (!isAdmin && !userOwnsPost)
-                return BadRequest(new Response<bool>()
-                {
-                    Succeeded = false,
-                    Message = "You do not own this post"
-                });
+                return BadRequest(new Response(false, "You do not own this post"));
+
             await postService.DeletePostAsync(id);
             return NoContent();
         }

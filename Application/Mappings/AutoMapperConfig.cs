@@ -1,4 +1,6 @@
 ﻿using Application.Dto;
+using Application.Dto.Picture;
+using Application.Dto.Post;
 using AutoMapper;
 using Domain.Entities;
 
@@ -13,6 +15,8 @@ namespace Application.Mappings
                 .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => src.Created));
             cfg.CreateMap<CreatePostDto, Post>();
             cfg.CreateMap<UpdatePostDto, Post>();
+            cfg.CreateMap<Picture, PictureDto>();
+            cfg.CreateMap<UpdatePictureDto, Picture>();
         })
             .CreateMapper();
     }
