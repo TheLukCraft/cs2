@@ -47,7 +47,7 @@ namespace Application.Services
                 Main = existingPictures.Count() == 0 ? true : false
             };
 
-            var result = pictureRepository.AddAsync(picture);
+            var result = await pictureRepository.AddAsync(picture);
             return mapper.Map<PictureDto>(result);
         }
 
