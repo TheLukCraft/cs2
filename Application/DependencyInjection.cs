@@ -11,6 +11,7 @@ namespace Application
         {
             services.AddScoped<IPostService, PostService>();
             services.AddSingleton(AutoMapperConfig.Initialize());
+            services.AddScoped<IPictureService, PictureService>();
 
             return services;
         }

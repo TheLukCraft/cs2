@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
@@ -19,14 +20,22 @@ namespace Infrastructure.Repositories
             return context.Posts.AsQueryable();
         }
 
-        public async Task<IEnumerable<Post>> GetAllAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Post>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy)
         {
-            return await context.Posts.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return await context.Posts
+                .Where(m => m.Title.ToLower().Contains(filterBy.ToLower()) || m.Content.ToLower().Contains(filterBy.ToLower()))
+                .OrderByPropertyName(sortField, ascending)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize).ToListAsync();
         }
 
-        public async Task<int> GetAllCountAsync()
+        public async Task<int> GetAllCountAsync(string filterBy)
         {
-            return await context.Posts.CountAsync();
+            return await context.Posts
+                .Where(m => m.Title.ToLower()
+                .Contains(filterBy.ToLower()) || m.Content.ToLower()
+                .Contains(filterBy.ToLower()))
+                .CountAsync();
         }
 
         public async Task<Post> GetByIdAsync(int id)

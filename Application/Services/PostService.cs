@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using Application.Dto.Post;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -23,15 +23,15 @@ namespace Application.Services
             return mapper.ProjectTo<PostDto>(posts);
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy)
         {
-            var posts = await postRepository.GetAllAsync(pageNumber, pageSize);
+            var posts = await postRepository.GetAllAsync(pageNumber, pageSize, sortField, ascending, filterBy);
             return mapper.Map<IEnumerable<PostDto>>(posts);
         }
 
-        public async Task<int> GetAllPostsCountAsync()
+        public async Task<int> GetAllPostsCountAsync(string filterBy)
         {
-            return await postRepository.GetAllCountAsync();
+            return await postRepository.GetAllCountAsync(filterBy);
         }
 
         public async Task<PostDto> GetPostByIdAsync(int id)
@@ -40,13 +40,14 @@ namespace Application.Services
             return mapper.Map<PostDto>(post);
         }
 
-        public async Task<PostDto> AddNewPostAsync(CreatePostDto newPost)
+        public async Task<PostDto> AddNewPostAsync(CreatePostDto newPost, string userId)
         {
             if (string.IsNullOrEmpty(newPost.Title))
             {
                 throw new Exception("Post can not have an empty title.");
             }
             var post = mapper.Map<Post>(newPost);
+            post.UserId = userId;
             var result = await postRepository.AddAsync(post);
             return mapper.Map<PostDto>(result);
         }
@@ -62,6 +63,18 @@ namespace Application.Services
         {
             var post = await postRepository.GetByIdAsync(id);
             await postRepository.DeleteAsync(post);
+        }
+
+        public async Task<bool> UserOwnsPostAsync(int postId, string userId)
+        {
+            var post = await postRepository.GetByIdAsync(postId);
+            if (post == null)
+                return false;
+
+            if (post.UserId != userId)
+                return false;
+
+            return true;
         }
     }
 }
