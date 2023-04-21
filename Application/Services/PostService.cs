@@ -42,10 +42,6 @@ namespace Application.Services
 
         public async Task<PostDto> AddNewPostAsync(CreatePostDto newPost, string userId)
         {
-            if (string.IsNullOrEmpty(newPost.Title))
-            {
-                throw new Exception("Post can not have an empty title.");
-            }
             var post = mapper.Map<Post>(newPost);
             post.UserId = userId;
             var result = await postRepository.AddAsync(post);

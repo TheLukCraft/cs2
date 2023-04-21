@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces;
 using Application.Services.Emails;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace WebAPI.Installers
 {

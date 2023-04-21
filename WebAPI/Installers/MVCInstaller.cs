@@ -1,10 +1,12 @@
 ﻿using Infrastructure;
 using Application;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
 using Application.Services;
 using WebAPI.Middelwares;
+using FluentValidation;
+using Application.Validators;
+using FluentValidation.AspNetCore;
 
 namespace WebAPI.Installers
 {
@@ -19,6 +21,10 @@ namespace WebAPI.Installers
             .Select()
             .Filter()
             .OrderBy());
+            services.AddFluentValidation(options =>
+            {
+                options.RegisterValidatorsFromAssemblyContaining<CreatePostDtoValidator>();
+            });
             services.AddApiVersioning(x =>
             {
                 x.DefaultApiVersion = new ApiVersion(1, 0);

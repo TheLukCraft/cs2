@@ -39,7 +39,7 @@ namespace WebAPI.Controllers.V1
             var userExists = await userManager.FindByNameAsync(register.UserName);
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<bool>
+                return StatusCode(StatusCodes.Status409Conflict, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User already exists!"
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers.V1
             var result = await userManager.CreateAsync(user, register.Password);
             if (!result.Succeeded)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<bool>
+                return StatusCode(StatusCodes.Status400BadRequest, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User creation failed! Please check user details and try again",
@@ -83,7 +83,7 @@ namespace WebAPI.Controllers.V1
             var userExists = await userManager.FindByNameAsync(register.UserName);
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<bool>
+                return StatusCode(StatusCodes.Status409Conflict, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User already exists!"
@@ -99,7 +99,7 @@ namespace WebAPI.Controllers.V1
             var result = await userManager.CreateAsync(user, register.Password);
             if (!result.Succeeded)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<bool>
+                return StatusCode(StatusCodes.Status400BadRequest, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User creation failed! Please check user details and try again",
