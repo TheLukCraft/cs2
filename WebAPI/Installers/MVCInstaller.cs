@@ -21,10 +21,16 @@ namespace WebAPI.Installers
             .Select()
             .Filter()
             .OrderBy());
-            services.AddFluentValidation(options =>
+            services.AddControllers()
+            .AddFluentValidation(options =>
             {
                 options.RegisterValidatorsFromAssemblyContaining<CreatePostDtoValidator>();
-            });
+            })
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.WriteIndented = true;
+            })
+            .AddXmlSerializerFormatters();
             services.AddApiVersioning(x =>
             {
                 x.DefaultApiVersion = new ApiVersion(1, 0);
