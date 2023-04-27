@@ -1,17 +1,16 @@
 ﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using WebAPI.Wrappers;
 using WebAPI.Filters;
 using WebAPI.Helpers;
-using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Infrastructure.Identity;
 using Application.Dto.Post;
 using Application.Validators;
 using WebAPI.Attributes;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers.V1
 {

@@ -2,8 +2,6 @@ using HealthChecks.UI.Client;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using WebAPI.HealthChecks;
 using WebAPI.Installers;
 using WebAPI.Middelwares;
 
