@@ -8,9 +8,6 @@ namespace WebAPI.Installers
         {
             services.AddHealthChecks()
                 .AddDbContextCheck<CSGOContext>("Database");
-
-            services.AddHealthChecksUI()
-                .AddInMemoryStorage();
         }
     }
 }
