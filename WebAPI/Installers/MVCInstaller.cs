@@ -16,6 +16,8 @@ namespace WebAPI.Installers
         {
             services.AddApplication();
             services.AddInfrastructure();
+
+            services.AddMemoryCache();
             services.AddControllers()
             .AddOData(options => options
             .Select()
