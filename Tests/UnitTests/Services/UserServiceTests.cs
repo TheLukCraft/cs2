@@ -2,7 +2,7 @@
 
 namespace UnitTests.Services
 {
-    public class UserServiceTest
+    public class UserServiceTests
     {
         [Fact]
         public void is_user_email_confirmed_should_return_true_when_input_is_true()
