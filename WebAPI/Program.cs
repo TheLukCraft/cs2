@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.InstallServicesInAssembly(builder.Configuration);
 builder.Services.AddAuthorization();
+builder.Services.AddControllers();
 
 builder.Services.AddDbContext<CSGOContext>(
     option => option.UseSqlServer(builder.Configuration.GetConnectionString("CSGODb"))

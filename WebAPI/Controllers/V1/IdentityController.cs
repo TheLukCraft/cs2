@@ -8,7 +8,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebAPI.Models;
-using WebAPI.SwaggerExamples.Responses;
 using WebAPI.Wrappers;
 
 namespace WebAPI.Controllers.V1
@@ -30,15 +29,6 @@ namespace WebAPI.Controllers.V1
             this.emailSenderService = emailSenderService;
         }
 
-        /// <summary>
-        /// Registers the user in the system.
-        /// </summary>
-        /// <param name="register">The register.</param>
-        /// <returns></returns>
-        /// <response code="200">User created successfully!</response>
-        /// <response code="409">User already exists!</response>
-        [ProducesResponseType(typeof(RegisterResponseStatus200), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(RegisterResponseStatus409), StatusCodes.Status409Conflict)]
         [HttpPost()]
         [Route("Register")]
         public async Task<IActionResult> RegisterAsync(RegisterModel register)
@@ -46,7 +36,7 @@ namespace WebAPI.Controllers.V1
             var userExists = await userManager.FindByNameAsync(register.UserName);
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status409Conflict, new Response
+                return StatusCode(StatusCodes.Status409Conflict, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User already exists!"
@@ -76,18 +66,13 @@ namespace WebAPI.Controllers.V1
 
             await emailSenderService.Send(user.Email, "Registration confirmation", EmailTemplate.WelcomeMessage, user);
 
-            return Ok(new Response
+            return Ok(new Response<bool>
             {
                 Succeeded = true,
                 Message = "User created successfully!"
             });
         }
 
-        /// <summary>
-        /// Registers the admin in the system.
-        /// </summary>
-        /// <param name="register">The register.</param>
-        /// <returns></returns>
         [HttpPost()]
         [Route("RegisterAdmin")]
         public async Task<IActionResult> RegisterAdminAsync(RegisterModel register)
@@ -123,18 +108,13 @@ namespace WebAPI.Controllers.V1
 
             await userManager.AddToRoleAsync(user, UserRoles.Admin);
 
-            return Ok(new Response
+            return Ok(new Response<bool>
             {
                 Succeeded = true,
                 Message = "User created successfully!"
             });
         }
 
-        /// <summary>
-        /// Logins the user into system.
-        /// </summary>
-        /// <param name="login">The login.</param>
-        /// <returns></returns>
         [HttpPost()]
         [Route("Login")]
         public async Task<IActionResult> LoginAsync(LoginModel login)
