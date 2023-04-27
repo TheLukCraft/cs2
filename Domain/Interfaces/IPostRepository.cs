@@ -1,22 +1,21 @@
 ﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
     public interface IPostRepository
     {
-        IEnumerable<Post> GetAll();
+        IQueryable<Post> GetAll();
 
-        Post GetById(int id);
+        Task<IEnumerable<Post>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy);
 
-        Post Add(Post post);
+        Task<int> GetAllCountAsync(string filterBy);
 
-        void Updated(Post post);
+        Task<Post> GetByIdAsync(int id);
 
-        void Delete(Post post);
+        Task<Post> AddAsync(Post post);
+
+        Task UpdatedAsync(Post post);
+
+        Task DeleteAsync(Post post);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.ExtensionMethods;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -13,33 +15,53 @@ namespace Infrastructure.Repositories
             this.context = context;
         }
 
-        public IEnumerable<Post> GetAll()
+        public IQueryable<Post> GetAll()
         {
-            return context.Posts;
+            return context.Posts.AsQueryable();
         }
 
-        public Post GetById(int id)
+        public async Task<IEnumerable<Post>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy)
         {
-            return context.Posts.SingleOrDefault(x => x.Id == id);
+            return await context.Posts
+                .Where(m => m.Title.ToLower().Contains(filterBy.ToLower()) || m.Content.ToLower().Contains(filterBy.ToLower()))
+                .OrderByPropertyName(sortField, ascending)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize).ToListAsync();
         }
 
-        public Post Add(Post post)
+        public async Task<int> GetAllCountAsync(string filterBy)
         {
-            context.Posts.Add(post);
-            context.SaveChanges();
-            return post;
+            return await context.Posts
+                .Where(m => m.Title.ToLower()
+                .Contains(filterBy.ToLower()) || m.Content.ToLower()
+                .Contains(filterBy.ToLower()))
+                .CountAsync();
         }
 
-        public void Updated(Post post)
+        public async Task<Post> GetByIdAsync(int id)
+        {
+            return await context.Posts.SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Post> AddAsync(Post post)
+        {
+            var createdPost = await context.Posts.AddAsync(post);
+            await context.SaveChangesAsync();
+            return createdPost.Entity;
+        }
+
+        public async Task UpdatedAsync(Post post)
         {
             context.Posts.Update(post);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
 
-        public void Delete(Post post)
+        public async Task DeleteAsync(Post post)
         {
             context.Posts.Remove(post);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
     }
 }

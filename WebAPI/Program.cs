@@ -1,8 +1,10 @@
 using Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using WebAPI.HealthChecks;
 using WebAPI.Installers;
+using WebAPI.Middelwares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,13 +12,6 @@ builder.Services.InstallServicesInAssembly(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
-builder.Services.AddApiVersioning(x =>
-{
-    x.DefaultApiVersion = new ApiVersion(1, 0);
-    x.AssumeDefaultVersionWhenUnspecified = true;
-    x.ReportApiVersions = true;
-    x.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
-});
 builder.Services.AddDbContext<CSGOContext>(
     option => option.UseSqlServer(builder.Configuration.GetConnectionString("CSGODb"))
     );
@@ -28,13 +23,33 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ErrorHandlingMiddelware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseHealthChecks("/healthcheck", new HealthCheckOptions
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+
+        var response = new HealthCheckResponse
+        {
+            Status = report.Status.ToString(),
+            Checks = report.Entries.Select(x => new HealthCheck
+            {
+                Component = x.Key,
+                Status = x.Value.Status.ToString(),
+                Description = x.Value.Description
+            }),
+            Duration = report.TotalDuration
+        };
+
+        await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+    }
+});
 
 app.Run();
