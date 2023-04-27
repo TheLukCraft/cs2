@@ -1,4 +1,5 @@
 ﻿using Application.Dto;
+using Application.Dto.Attachments;
 using Application.Dto.Picture;
 using Application.Dto.Post;
 using AutoMapper;
@@ -17,6 +18,7 @@ namespace Application.Mappings
             cfg.CreateMap<UpdatePostDto, Post>();
             cfg.CreateMap<Picture, PictureDto>();
             cfg.CreateMap<UpdatePictureDto, Picture>();
+            cfg.CreateMap<Attachment, AttachmentDto>();
         })
             .CreateMapper();
     }

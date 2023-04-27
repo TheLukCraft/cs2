@@ -3,10 +3,7 @@ using Domain.Enums;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR.Protocol;
-using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OData.UriParser;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -34,12 +31,12 @@ namespace WebAPI.Controllers.V1
 
         [HttpPost()]
         [Route("Register")]
-        public async Task<IActionResult> Register(RegisterModel register)
+        public async Task<IActionResult> RegisterAsync(RegisterModel register)
         {
             var userExists = await userManager.FindByNameAsync(register.UserName);
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<bool>
+                return StatusCode(StatusCodes.Status409Conflict, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User already exists!"
@@ -55,7 +52,7 @@ namespace WebAPI.Controllers.V1
             var result = await userManager.CreateAsync(user, register.Password);
             if (!result.Succeeded)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<bool>
+                return StatusCode(StatusCodes.Status400BadRequest, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User creation failed! Please check user details and try again",
@@ -78,12 +75,12 @@ namespace WebAPI.Controllers.V1
 
         [HttpPost()]
         [Route("RegisterAdmin")]
-        public async Task<IActionResult> RegisterAdmin(RegisterModel register)
+        public async Task<IActionResult> RegisterAdminAsync(RegisterModel register)
         {
             var userExists = await userManager.FindByNameAsync(register.UserName);
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<bool>
+                return StatusCode(StatusCodes.Status409Conflict, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User already exists!"
@@ -99,7 +96,7 @@ namespace WebAPI.Controllers.V1
             var result = await userManager.CreateAsync(user, register.Password);
             if (!result.Succeeded)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<bool>
+                return StatusCode(StatusCodes.Status400BadRequest, new Response<bool>
                 {
                     Succeeded = false,
                     Message = "User creation failed! Please check user details and try again",
@@ -120,7 +117,7 @@ namespace WebAPI.Controllers.V1
 
         [HttpPost()]
         [Route("Login")]
-        public async Task<IActionResult> Login(LoginModel login)
+        public async Task<IActionResult> LoginAsync(LoginModel login)
         {
             var user = await userManager.FindByNameAsync(login.UserName);
             if (user != null && await userManager.CheckPasswordAsync(user, login.Password))
@@ -146,10 +143,10 @@ namespace WebAPI.Controllers.V1
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
-                return Ok(new
+                return Ok(new AuthSuccessResponse()
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Expiration = token.ValidTo
                 });
             }
             return Unauthorized();

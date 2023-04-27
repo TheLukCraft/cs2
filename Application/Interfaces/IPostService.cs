@@ -17,6 +17,7 @@ namespace Application.Interfaces
         Task UpdatePostAsync(UpdatePostDto updatePost);
 
         Task DeletePostAsync(int id);
+
         Task<bool> UserOwnsPostAsync(int postId, string userId);
     }
 }

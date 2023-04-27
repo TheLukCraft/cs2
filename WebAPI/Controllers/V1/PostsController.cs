@@ -1,15 +1,16 @@
 ﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Annotations;
 using WebAPI.Wrappers;
 using WebAPI.Filters;
 using WebAPI.Helpers;
-using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Infrastructure.Identity;
 using Application.Dto.Post;
+using Application.Validators;
+using WebAPI.Attributes;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers.V1
 {
@@ -69,11 +70,24 @@ namespace WebAPI.Controllers.V1
             return Ok(new Response<PostDto>(post));
         }
 
+        [ValidateFilter]
         [SwaggerOperation(Summary = "Create a new post")]
         [Authorize(Roles = UserRoles.User)]
         [HttpPost()]
         public async Task<IActionResult> Create(CreatePostDto newPost)
         {
+            var validator = new CreatePostDtoValidator();
+            var result = validator.Validate(newPost);
+            if (!result.IsValid)
+            {
+                return BadRequest(new Response<bool>
+                {
+                    Succeeded = false,
+                    Message = "Something went wrong.",
+                    Errors = result.Errors.Select(x => x.ErrorMessage)
+                });
+            }
+
             var post = await postService.AddNewPostAsync(newPost, User.FindFirstValue(ClaimTypes.NameIdentifier));
             return Created($"posts/{post.Id}", new Response<PostDto>(post));
         }
