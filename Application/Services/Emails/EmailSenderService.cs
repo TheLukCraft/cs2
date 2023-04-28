@@ -20,7 +20,7 @@ namespace Application.Services.Emails
             this.email = email;
         }
 
-        public async Task<bool> Send(string to, string subject, EmailTemplate template, object model)
+        public async Task<bool> SendAsync(string to, string subject, EmailTemplate template, object model)
         {
             var result = await email.To(to)
                 .Subject(subject)

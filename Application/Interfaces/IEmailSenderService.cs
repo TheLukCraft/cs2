@@ -4,6 +4,6 @@ namespace Application.Interfaces
 {
     public interface IEmailSenderService
     {
-        Task<bool> Send(string to, string subject, EmailTemplate emailTemplate, object model);
+        Task<bool> SendAsync(string to, string subject, EmailTemplate emailTemplate, object model);
     }
 }

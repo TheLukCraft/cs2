@@ -20,9 +20,9 @@ namespace Application.Services
             this.logger = logger;
         }
 
-        public IQueryable<PostDto> GetAllPosts()
+        public async Task<IQueryable<PostDto>> GetAllPostsAsync()
         {
-            var posts = postRepository.GetAll();
+            var posts = await postRepository.GetAllAsync();
             return mapper.ProjectTo<PostDto>(posts);
         }
 
