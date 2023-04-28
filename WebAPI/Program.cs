@@ -2,6 +2,7 @@ using Infrastructure.Data;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Prometheus;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System.Security.Policy;
@@ -45,7 +46,9 @@ app.UseMiddleware<ErrorHandlingMiddelware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpMetrics();
 
+app.MapMetrics();
 app.MapControllers();
 app.UseHealthChecks("/healthcheck", new HealthCheckOptions
 {
