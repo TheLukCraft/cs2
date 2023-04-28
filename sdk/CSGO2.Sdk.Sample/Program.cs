@@ -1,5 +1,4 @@
-﻿using CSGO2.Contracts.Requests;
-using CSGO2.Contracts.Responses;
+﻿using CS2.Contracts.Requests;
 using Refit;
 
 namespace CSGO2.Sdk.Sample
@@ -10,7 +9,7 @@ namespace CSGO2.Sdk.Sample
         {
             var cachedToken = string.Empty;
             var identityApi = RestService.For<IIdentityAPI>("https://localhost:7138/");
-            var csgoApi = RestService.For<ICSGO2API>("https://localhost:7138/", new RefitSettings
+            var csgoApi = RestService.For<ICS2API>("https://localhost:7138/", new RefitSettings
             {
                 AuthorizationHeaderValueGetter = () => Task.FromResult(cachedToken)
             });

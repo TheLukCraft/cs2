@@ -1,17 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Refit" Version="6.3.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CSGO2.Contracts\CSGO2.Contracts.csproj" />
+    <ProjectReference Include="..\CSGO2.Sdk\CS2.Sdk.csproj" />
   </ItemGroup>
 
 </Project>

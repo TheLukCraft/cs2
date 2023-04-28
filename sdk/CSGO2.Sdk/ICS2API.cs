@@ -1,12 +1,11 @@
-﻿using CSGO2.Contracts;
-using CSGO2.Contracts.Requests;
-using CSGO2.Contracts.Responses;
+﻿using CS2.Contracts.Requests;
+using CS2.Contracts.Responses;
 using Refit;
 
 namespace CSGO2.Sdk
 {
     [Headers("Authorization: Bearer")]
-    public interface ICSGO2API
+    public interface ICS2API
     {
         [Get("/posts/{id}")]
         Task<ApiResponse<Response<PostDto>>> GetPostAsync(int id);

@@ -1,4 +1,4 @@
-﻿namespace CSGO2.Contracts.Requests
+﻿namespace CS2.Contracts.Requests
 {
     public class CreatePostDto
     {
