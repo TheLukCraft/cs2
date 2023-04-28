@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
@@ -9,7 +8,6 @@ using WebAPI.Wrappers;
 using Application.Dto.Post;
 using FluentAssertions;
 using System.Net;
-using Elasticsearch.Net;
 
 namespace EndToEndTests.Controllers
 {

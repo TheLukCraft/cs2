@@ -12,7 +12,7 @@ namespace WebAPI.Installers
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<CSGOContext>()
+                .AddEntityFrameworkStores<CSContext>()
                 .AddDefaultTokenProviders();
 
             services.AddAuthentication(options =>

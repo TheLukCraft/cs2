@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class CSGOContext : IdentityDbContext<ApplicationUser>
+    public class CSContext : IdentityDbContext<ApplicationUser>
     {
         private readonly UserResloverService userService;
 
-        public CSGOContext(DbContextOptions<CSGOContext> options, UserResloverService userService) : base(options)
+        public CSContext(DbContextOptions<CSContext> options, UserResloverService userService) : base(options)
         {
             this.userService = userService;
         }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(CSGOContext))]
+    [DbContext(typeof(CSContext))]
     [Migration("20230421031532_AddPostAttachmentFixed")]
     partial class AddPostAttachmentFixed
     {

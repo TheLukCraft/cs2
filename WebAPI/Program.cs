@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using Prometheus;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
-using System.Security.Policy;
 using WebAPI.HealthChecks;
 using WebAPI.Installers;
 using WebAPI.Middelwares;
@@ -30,7 +29,7 @@ builder.Host.UseSerilog((context, configuration) =>
     .ReadFrom.Configuration(context.Configuration);
 });
 
-builder.Services.AddDbContext<CSGOContext>(
+builder.Services.AddDbContext<CSContext>(
     option => option.UseSqlServer(builder.Configuration.GetConnectionString("CSGODb"))
     );
 

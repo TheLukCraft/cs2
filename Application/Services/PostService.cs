@@ -22,7 +22,7 @@ namespace Application.Services
 
         public async Task<IQueryable<PostDto>> GetAllPostsAsync()
         {
-            var posts = await postRepository.GetAllAsync();
+            var posts = postRepository.GetAll();
             return mapper.ProjectTo<PostDto>(posts);
         }
 
