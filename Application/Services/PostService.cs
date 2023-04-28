@@ -3,6 +3,7 @@ using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services
 {
@@ -10,11 +11,13 @@ namespace Application.Services
     {
         private readonly IPostRepository postRepository;
         private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public PostService(IPostRepository postRepository, IMapper mapper)
+        public PostService(IPostRepository postRepository, IMapper mapper, ILogger<PostService> logger)
         {
             this.postRepository = postRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public IQueryable<PostDto> GetAllPosts()
@@ -25,6 +28,9 @@ namespace Application.Services
 
         public async Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy)
         {
+            logger.LogInformation($"pageNumber: {pageNumber} | pageSize: {pageSize}");
+            logger.LogDebug($"Fetching posts.");
+
             var posts = await postRepository.GetAllAsync(pageNumber, pageSize, sortField, ascending, filterBy);
             return mapper.Map<IEnumerable<PostDto>>(posts);
         }

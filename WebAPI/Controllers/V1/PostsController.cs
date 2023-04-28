@@ -11,6 +11,7 @@ using Application.Dto.Post;
 using Application.Validators;
 using WebAPI.Attributes;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace WebAPI.Controllers.V1
 {
@@ -21,10 +22,14 @@ namespace WebAPI.Controllers.V1
     public class PostsController : ControllerBase
     {
         private readonly IPostService postService;
+        private readonly IMemoryCache memoryCache;
+        private readonly ILogger<PostsController> logger;
 
-        public PostsController(IPostService postService)
+        public PostsController(IPostService postService, IMemoryCache memoryCache, ILogger<PostsController> logger)
         {
             this.postService = postService;
+            this.memoryCache = memoryCache;
+            this.logger = logger;
         }
 
         [SwaggerOperation(Summary = "Retrieves sort fields")]
@@ -55,7 +60,18 @@ namespace WebAPI.Controllers.V1
         [HttpGet("[action]")]
         public ActionResult<IQueryable<PostDto>> GetAll()
         {
-            return Ok(postService.GetAllPosts());
+            var posts = memoryCache.Get<IQueryable<PostDto>>("posts");
+            if (posts == null)
+            {
+                logger.LogInformation("Fetching from service.");
+                posts = postService.GetAllPosts();
+                memoryCache.Set("posts", posts, TimeSpan.FromMinutes(1));
+            }
+            else
+            {
+                logger.LogInformation("Fetching from cache.");
+            }
+            return Ok(posts);
         }
 
         [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]
