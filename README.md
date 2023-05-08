@@ -56,15 +56,19 @@ git clone https://github.com/TheLukCraft/cs2.git
 2. Create empty database in Microsoft SQL Server Management Studio
 
 3. Setup appsetings.json
+[Connection string](https://www.connectionstrings.com/sql-server)
+[MailTrap](https://mailtrap.io/)
 <img src="https://gcdnb.pbrd.co/images/OsuLft4L2jYo.png?o=1">
 
-Run project
+4. Run the CS2.sln project
+
+5. Use package manager console by selecting the project as src/Infrastructure and type the following commands
 ```bash
-cd path_to_the_downloaded_project\cs2\WebAPI
-dotnet run
+add-migration Init
+update-database
 ```
 
-
+6. Set WebAPI as a starter project and launch the project
 
 ## Usage
 
@@ -78,11 +82,9 @@ See the [open issues](https://github.com/TheLukCraft/CS2/issues) for a list of p
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-* If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/TheLukCraft/CS2/issues/new) to discuss it, or directly create a pull request after you edit the *README.md* file with necessary changes.
+* If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/TheLukCraft/CS2/issues/new) to discuss it.
 * Please make sure you check your spelling and grammar.
 * Create individual PR for each suggestion.
-* Please also read through the [Code Of Conduct](https://github.com/TheLukCraft/CS2/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
 
 ### Creating A Pull Request
 
