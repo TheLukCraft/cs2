@@ -64,7 +64,7 @@ namespace WebAPI.Controllers.V1
 
             await userManager.AddToRoleAsync(user, UserRoles.User);
 
-            await emailSenderService.Send(user.Email, "Registration confirmation", EmailTemplate.WelcomeMessage, user);
+            await emailSenderService.SendAsync(user.Email, "Registration confirmation", EmailTemplate.WelcomeMessage, user);
 
             return Ok(new Response<bool>
             {

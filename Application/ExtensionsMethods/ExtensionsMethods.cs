@@ -15,7 +15,7 @@ namespace Application.ExtensionsMethods
 
         public static string SaveFile(this IFormFile formFile)
         {
-            string rootPath = @"C\CSGO2_Attachments";
+            string rootPath = @"CS2_Attachments";
             if (!Directory.Exists(rootPath))
                 Directory.CreateDirectory(rootPath);
 

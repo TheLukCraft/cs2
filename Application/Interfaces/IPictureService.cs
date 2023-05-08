@@ -1,5 +1,4 @@
-﻿using Application.Dto;
-using Application.Dto.Picture;
+﻿using Application.Dto.Picture;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Interfaces
@@ -12,7 +11,7 @@ namespace Application.Interfaces
 
         Task<PictureDto> AddPictureToPostAsync(int postId, IFormFile file);
 
-        Task SetMainPicture(int postId, int id);
+        Task SetMainPictureAsync(int postId, int id);
 
         Task UpdatePictureAsync(UpdatePictureDto updatePicture);
 

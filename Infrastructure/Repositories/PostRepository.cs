@@ -8,9 +8,9 @@ namespace Infrastructure.Repositories
 {
     public class PostRepository : IPostRepository
     {
-        private readonly CSGOContext context;
+        private readonly CSContext context;
 
-        public PostRepository(CSGOContext context)
+        public PostRepository(CSContext context)
         {
             this.context = context;
         }

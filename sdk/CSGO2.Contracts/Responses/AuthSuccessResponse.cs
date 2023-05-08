@@ -1,4 +1,4 @@
-﻿namespace CSGO2.Contracts.Responses
+﻿namespace CS2.Contracts.Responses
 {
     public class AuthSuccessResponse
     {

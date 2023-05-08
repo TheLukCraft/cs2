@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using WebAPI.Filters;
+﻿using WebAPI.Filters;
 using WebAPI.Wrappers;
 
 namespace WebAPI.Helpers

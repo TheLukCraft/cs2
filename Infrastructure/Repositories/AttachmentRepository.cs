@@ -7,9 +7,9 @@ namespace Infrastructure.Repositories
 {
     public class AttachmentRepository : IAttachmentRepository
     {
-        private readonly CSGOContext context;
+        private readonly CSContext context;
 
-        public AttachmentRepository(CSGOContext context)
+        public AttachmentRepository(CSContext context)
         {
             this.context = context;
         }

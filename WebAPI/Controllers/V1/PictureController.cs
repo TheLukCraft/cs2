@@ -28,7 +28,7 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Retrieves a picture by unique post id")]
         [HttpGet("[action]/{postId}")]
-        public async Task<IActionResult> GetByPostId(int postId)
+        public async Task<IActionResult> GetByPostIdAsync(int postId)
         {
             var pictures = await pictureService.GetPicturesByPostIdAsync(postId);
             return Ok(new Response<IEnumerable<PictureDto>>(pictures));
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Retrieves a specific picture by unique id")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetAsync(int id)
         {
             var picture = await pictureService.GetPictureByIdAsync(id);
             if (picture == null)
@@ -67,19 +67,19 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Sets the main picture of the post")]
         [HttpPut("[action]/{postId}/{id}")]
-        public async Task<IActionResult> SetMainPicture(int postId, int id)
+        public async Task<IActionResult> SetMainPictureAsync(int postId, int id)
         {
             var userOwner = await postService.UserOwnsPostAsync(postId, User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (!userOwner)
                 return BadRequest(new Response(false, "You do not own this post."));
 
-            await pictureService.SetMainPicture(postId, id);
+            await pictureService.SetMainPictureAsync(postId, id);
             return NoContent();
         }
 
         [SwaggerOperation(Summary = "Update a specific picture")]
         [HttpPut()]
-        public async Task<IActionResult> Update(UpdatePictureDto updatePicture)
+        public async Task<IActionResult> UpdateAsync(UpdatePictureDto updatePicture)
         {
             var userOwnsPost = await postService.UserOwnsPostAsync(updatePicture.Id, User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (!userOwnsPost)
@@ -91,7 +91,7 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Delete a specific picture")]
         [HttpDelete("{postId}/{id}")]
-        public async Task<IActionResult> Delete(int id, int postId)
+        public async Task<IActionResult> DeleteAsync(int id, int postId)
         {
             var userOwnsPost = await postService.UserOwnsPostAsync(postId, User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (!userOwnsPost)

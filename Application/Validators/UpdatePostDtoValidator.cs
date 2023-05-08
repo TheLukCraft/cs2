@@ -3,17 +3,10 @@ using FluentValidation;
 
 namespace Application.Validators
 {
-    public class CreatePostDtoValidator : AbstractValidator<CreatePostDto>
+    public class UpdatePostDtoValidator : AbstractValidator<UpdatePostDto>
     {
-        public CreatePostDtoValidator()
+        public UpdatePostDtoValidator()
         {
-            #region Title
-
-            RuleFor(x => x.Title).NotEmpty().WithMessage("Post can not have an empty title");
-            RuleFor(x => x.Title).Length(5, 100).WithMessage("The title must be between 5 and 100 characters long.");
-
-            #endregion Title
-
             #region Content
 
             RuleFor(x => x.Content).NotEmpty().WithMessage("Post can not have an empty content");

@@ -2,15 +2,14 @@
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure.Repositories
 {
     public class PictureRepository : IPictureRepository
     {
-        private readonly CSGOContext context;
+        private readonly CSContext context;
 
-        public PictureRepository(CSGOContext context)
+        public PictureRepository(CSContext context)
         {
             this.context = context;
         }

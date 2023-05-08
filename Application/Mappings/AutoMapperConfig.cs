@@ -1,5 +1,4 @@
-﻿using Application.Dto;
-using Application.Dto.Attachments;
+﻿using Application.Dto.Attachments;
 using Application.Dto.Picture;
 using Application.Dto.Post;
 using AutoMapper;

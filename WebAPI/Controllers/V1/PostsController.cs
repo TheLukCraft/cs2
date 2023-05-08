@@ -34,7 +34,7 @@ namespace WebAPI.Controllers.V1
 
         [SwaggerOperation(Summary = "Retrieves sort fields")]
         [HttpGet("[action]")]
-        public IActionResult GetSortFields()
+        public IActionResult GetSortFieldsAsync()
         {
             return Ok(SortingHelper.GetSortField().Select(x => x.Key));
         }
@@ -58,13 +58,13 @@ namespace WebAPI.Controllers.V1
         [Authorize(Roles = UserRoles.Admin)]
         [EnableQuery]
         [HttpGet("[action]")]
-        public ActionResult<IQueryable<PostDto>> GetAll()
+        public async Task<ActionResult<IQueryable<PostDto>>> GetAllAsync()
         {
             var posts = memoryCache.Get<IQueryable<PostDto>>("posts");
             if (posts == null)
             {
                 logger.LogInformation("Fetching from service.");
-                posts = postService.GetAllPosts();
+                posts = await postService.GetAllPostsAsync();
                 memoryCache.Set("posts", posts, TimeSpan.FromMinutes(1));
             }
             else
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers.V1
         [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetAsync(int id)
         {
             var post = await postService.GetPostByIdAsync(id);
             if (post == null)
@@ -111,7 +111,7 @@ namespace WebAPI.Controllers.V1
         [SwaggerOperation(Summary = "Update a existing post")]
         [Authorize(Roles = UserRoles.User)]
         [HttpPut()]
-        public async Task<IActionResult> Update(UpdatePostDto updatePost)
+        public async Task<IActionResult> UpdateAsync(UpdatePostDto updatePost)
         {
             var userOwnsPost = await postService.UserOwnsPostAsync(updatePost.Id, User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (!userOwnsPost)
@@ -124,7 +124,7 @@ namespace WebAPI.Controllers.V1
         [SwaggerOperation(Summary = "Delete a specific post")]
         [Authorize(Roles = UserRoles.AdminOrUser)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             var userOwnsPost = await postService.UserOwnsPostAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
             var isAdmin = User.FindFirstValue(ClaimTypes.Role).Contains(UserRoles.Admin);

@@ -1,4 +1,4 @@
-﻿namespace CSGO2.Contracts
+﻿namespace CS2.Contracts.Responses
 {
     public class Response<T> : Response
     {

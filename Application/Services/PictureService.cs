@@ -1,5 +1,4 @@
-﻿using Application.Dto;
-using Application.Dto.Picture;
+﻿using Application.Dto.Picture;
 using Application.ExtensionsMethods;
 using Application.Interfaces;
 using AutoMapper;
@@ -51,7 +50,7 @@ namespace Application.Services
             return mapper.Map<PictureDto>(result);
         }
 
-        public async Task SetMainPicture(int postId, int id)
+        public async Task SetMainPictureAsync(int postId, int id)
         {
             await pictureRepository.SetMainPictureAsync(postId, id);
         }

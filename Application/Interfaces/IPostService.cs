@@ -4,7 +4,7 @@ namespace Application.Interfaces
 {
     public interface IPostService
     {
-        IQueryable<PostDto> GetAllPosts();
+        Task<IQueryable<PostDto>> GetAllPostsAsync();
 
         Task<IEnumerable<PostDto>> GetAllPostsAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy);
 
