@@ -32,7 +32,7 @@
 
 ## About The Project
 
-![Screen Shot]([https://pasteboard.co/cnB9J0lap0hA.png](https://gcdnb.pbrd.co/images/cnB9J0lap0hA.png?o=1))
+![Screen Shot](https://gcdnb.pbrd.co/images/cnB9J0lap0hA.png?o=1)
 
 CS2 is an exciting new project aimed at helping players improve their grenade throwing skills in the popular first-person shooter game, Counter Strike. The project focuses on a website that contains an extensive library of videos and photos demonstrating various grenade throwing techniques and strategies.
 
