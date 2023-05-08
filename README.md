@@ -49,10 +49,20 @@ The site is designed to be friendly and intuitive, with easy navigation and sear
 
 ## Getting Started
 
-Download project
-'''bash
+1. Download project
+```bash
 git clone https://github.com/TheLukCraft/cs2.git
-'''
+```
+2. Create empty database in Microsoft SQL Server Management Studio
+
+3. Setup appsetings.json
+<img src="https://gcdnb.pbrd.co/images/OsuLft4L2jYo.png?o=1">
+
+Run project
+```bash
+cd path_to_the_downloaded_project\cs2\WebAPI
+dotnet run
+```
 
 
 
