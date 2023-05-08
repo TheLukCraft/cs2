@@ -32,7 +32,7 @@
 
 ## About The Project
 
-![Screen Shot](https://pasteboard.co/cnB9J0lap0hA.png)
+![Screen Shot]([https://pasteboard.co/cnB9J0lap0hA.png](https://gcdnb.pbrd.co/images/cnB9J0lap0hA.png?o=1))
 
 CS2 is an exciting new project aimed at helping players improve their grenade throwing skills in the popular first-person shooter game, Counter Strike. The project focuses on a website that contains an extensive library of videos and photos demonstrating various grenade throwing techniques and strategies.
 
@@ -49,8 +49,12 @@ The site is designed to be friendly and intuitive, with easy navigation and sear
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Download project
+'''bash
+git clone https://github.com/TheLukCraft/cs2.git
+'''
+
+
 
 ## Usage
 
