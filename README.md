@@ -23,12 +23,9 @@
 * [About the Project](#about-the-project)
 * [Built With](#built-with)
 * [Getting Started](#getting-started)
-* [Usage](#usage)
-* [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
 * [Authors](#authors)
-* [Acknowledgements](#acknowledgements)
 
 ## About The Project
 
@@ -58,7 +55,7 @@ git clone https://github.com/TheLukCraft/cs2.git
 3. Setup appsetings.json
 [Connection string](https://www.connectionstrings.com/sql-server)
 [MailTrap](https://mailtrap.io/)
-<img src="https://gcdnb.pbrd.co/images/OsuLft4L2jYo.png?o=1">
+<img src="https://gcdnb.pbrd.co/images/OsuLft4L2jYo.png?o=1" Width="700" Height="1200">
 
 4. Run the CS2.sln project
 
@@ -69,16 +66,6 @@ update-database
 ```
 
 6. Set WebAPI as a starter project and launch the project
-
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-## Roadmap
-
-See the [open issues](https://github.com/TheLukCraft/CS2/issues) for a list of proposed features (and known issues).
 
 ## Contributing
 
