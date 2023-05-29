@@ -1,0 +1,14 @@
+.flex {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 40vw;
+    box-shadow: 0.5rem 0.5rem 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+    background-color: rgb(16, 32, 46);
+    background-size: cover;
+    padding: 2rem;
+    text-align: center;
+    
+}
