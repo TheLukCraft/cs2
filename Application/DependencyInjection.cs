@@ -13,6 +13,7 @@ namespace Application
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddScoped<IPictureService, PictureService>();
             services.AddScoped<IAttachmentService, AttachmentService>();
+            services.AddScoped<IMapService, MapService>();
 
             return services;
         }
