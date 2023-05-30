@@ -1,3 +1,10 @@
-.img {
-    background-image: '../../../public/img/header-cs2.jpg';
+.header {
+  width: 100%;
+  background-color: rgb(84, 171, 237);
+}
+
+.header__title {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
 }

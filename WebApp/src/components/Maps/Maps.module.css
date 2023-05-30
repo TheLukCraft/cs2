@@ -1,0 +1,48 @@
+.container {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.img {
+  position: relative;
+}
+
+.img:hover {
+  border: 0.5rem solid rgb(234, 125, 15);
+  filter: brightness(70%);
+  transition: 0.3s;
+}
+
+/* .imageMirage {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-color: rgb(230, 104, 21);
+  transition: filter 0.3s;
+}
+
+.imageMirage:hover {
+  filter: brightness(70%);
+}
+
+.imageMirage:hover::after {
+  content: "Mirage";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}  */
+
+
+
+.img {
+  height: 14.5rem;
+  width: 25rem;
+  margin: 2rem;
+}

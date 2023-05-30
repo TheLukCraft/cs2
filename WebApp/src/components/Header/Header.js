@@ -1,6 +1,10 @@
 import React from 'react';
 
+import classes from './Header.module.css';
+
 export default function Header() {
-    return (<img className='img' src='../../../public/img/header-cs2.jpg' alt='CS2 logo'/>)
+    return (<div className={classes.header}>
+        <h2 className={classes.header__title}>Country Strike 2</h2>
+    </div>)
 };
 
