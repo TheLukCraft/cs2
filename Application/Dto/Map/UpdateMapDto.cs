@@ -1,6 +1,6 @@
 ﻿namespace Application.Dto.Map
 {
-    public class UpdatePostDto
+    public class UpdateMapDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
