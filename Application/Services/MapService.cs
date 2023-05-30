@@ -3,7 +3,6 @@ using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
-using Microsoft.Extensions.Logging;
 
 namespace Application.Services
 {
@@ -11,13 +10,11 @@ namespace Application.Services
     {
         private readonly IMapRepository mapRepository;
         private readonly IMapper mapper;
-        private readonly ILogger logger;
 
-        public MapService(IMapRepository mapRepository, IMapper mapper, ILogger logger)
+        public MapService(IMapRepository mapRepository, IMapper mapper)
         {
             this.mapRepository = mapRepository;
             this.mapper = mapper;
-            this.logger = logger;
         }
 
         public async Task<IEnumerable<MapDto>> GetAllMapsAsync()
