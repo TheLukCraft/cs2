@@ -5,6 +5,16 @@
   text-align: center;
 }
 
+.img {
+  position: relative;
+}
+
+.img:hover {
+  border: 0.5rem solid rgb(234, 125, 15);
+  filter: brightness(70%);
+  transition: 0.3s;
+}
+
 /* .imageMirage {
   position: relative;
   display: inline-block;
@@ -27,7 +37,7 @@
   font-size: 24px;
   font-weight: bold;
   color: white;
-} - do opracowania test */
+}  */
 
 
 
