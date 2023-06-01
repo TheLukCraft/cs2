@@ -1,6 +1,7 @@
 .flex {
   display: flex;
   justify-content: center;
+  
 }
 
 .container {
@@ -12,4 +13,19 @@
   padding: 2rem;
   text-align: center;
   border-radius: 0.8rem;
+}
+.title {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+   
+    width: 100vw;
+    text-align: center;
+    border-radius: 0.8rem;
+  }
+  .flex {
+    margin: 0;
+  }
 }
