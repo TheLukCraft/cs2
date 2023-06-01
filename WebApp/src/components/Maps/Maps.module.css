@@ -24,10 +24,15 @@
   width: 35rem;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 424px) {
   .container {
     display: block;
     max-width: 12rem;
+  }
+
+  .image {
+    display: flex;
+    justify-content: center;
   }
 
   .img {
@@ -35,10 +40,27 @@
     width: 13.5rem;
     margin: 0.8rem;
   }
+}
 
-  .image {
-    /* display: block; */
-    display: flex;
-    justify-content: center;
+@media screen and (min-width: 425px) and (max-width: 518px) {
+  .img {
+    height: 12rem;
+    width: 20rem;
+  }
+}
+
+@media screen and (min-width: 518px) and (max-width: 768px) {
+  .img {
+    height: 16rem;
+    width: 25rem;
+  }
+}
+
+@media screen and (max-width: 1225px) {
+  .container {
+    display: block;
+  }
+  .img {
+    margin: 1rem;
   }
 }
