@@ -7,4 +7,17 @@
   display: flex;
   justify-content: center;
   padding: 2rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .header {
+    width: 100vw;}
+
+    .header__title {
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+      margin: 0;
+    }
 }
