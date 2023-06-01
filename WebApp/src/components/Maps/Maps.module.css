@@ -11,12 +11,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  width: 35rem;
+  height: 20rem;
 }
 
 .img:hover {
   border: 0.5rem solid rgb(234, 125, 15);
   filter: brightness(70%);
   transition: 0.3s;
+}
+
+.image:hover::after {
+  content: "Mirage";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
 }
 
 .img {

@@ -8,10 +8,6 @@ html {
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-:root {
-  --dark-background: rgb(22, 56, 12);
-}
-
 body {
   margin: 0;
   color: white;
