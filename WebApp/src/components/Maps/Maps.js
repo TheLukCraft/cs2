@@ -14,6 +14,18 @@ export default function Maps() {
       <div className={classes.image}>
         <img className={classes.img} src={Inferno} alt="Inferno Map" />
       </div>
+      <div className={classes.image}>
+        <img className={classes.img} src={Inferno} alt="Inferno Map" />
+      </div>
+      <div className={classes.image}>
+        <img className={classes.img} src={Inferno} alt="Inferno Map" />
+      </div>
+      <div className={classes.image}>
+        <img className={classes.img} src={Inferno} alt="Inferno Map" />
+      </div>
+      <div className={classes.image}>
+        <img className={classes.img} src={Inferno} alt="Inferno Map" />
+      </div>
     </div>
   );
 }
