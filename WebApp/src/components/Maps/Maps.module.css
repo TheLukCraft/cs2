@@ -1,11 +1,8 @@
-
-
 .image {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  
+  position: relative;  
 }
 
 .img:hover {
@@ -28,7 +25,6 @@
 @media (max-width: 768px) {
   .container {
     display: block;
-
   }
 
   .image {
@@ -38,5 +34,36 @@
   .img {
     width: 18rem;
     height: 13rem;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  .container {
+    display: block;
+  }
+
+  .image {
+    margin: 0.8rem;
+  }
+
+  .img {
+    width: 26rem;
+    height: 18rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    display: grid;
+    column-gap: 0.3rem;
+    row-gap: 1.5rem;
+    max-width: 74rem;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .img {
+    width: 26rem;
+    height: 16rem;
   }
 }
