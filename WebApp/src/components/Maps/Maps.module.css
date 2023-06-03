@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;  
+  position: relative;
 }
 
 .img:hover {
@@ -11,7 +11,7 @@
   transition: 0.3s;
 }
 
-.image:hover::after {
+/* .image:hover::after {
   content: "Mirage";
   position: absolute;
   top: 50%;
@@ -20,7 +20,7 @@
   font-size: 1.5rem;
   font-weight: bold;
   color: rgb(255, 255, 255);
-}
+} */
 
 @media (max-width: 768px) {
   .container {
