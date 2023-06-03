@@ -13,26 +13,40 @@ import Anubis from "../../img/Anubis.png";
 export default function Maps() {
   return (
     <div className={classes.container}>
-      <div className={classes.image}>
-        <img className={classes.img} src={Mirage} alt="Mirage Map" />
+      <div className={classes.position}>
+        <div className={classes.imageMirage}>
+          <img className={classes.img} src={Mirage} alt="Mirage Map" />
+        </div>
       </div>
-      <div className={classes.image}>
-        <img className={classes.img} src={Inferno} alt="Inferno Map" />
+      <div className={classes.position}>
+        <div className={classes.imageInferno}>
+          <img className={classes.img} src={Inferno} alt="Inferno Map" />
+        </div>
       </div>
-      <div className={classes.image}>
-        <img className={classes.img} src={Overpass} alt="Overpass Map" />
+      <div className={classes.position}>
+        <div className={classes.imageOverpass}>
+          <img className={classes.img} src={Overpass} alt="Overpass Map" />
+        </div>
       </div>
-      <div className={classes.image}>
-        <img className={classes.img} src={Ancient} alt="Ancient Map" />
+      <div className={classes.position}>
+        <div className={classes.imageAncient}>
+          <img className={classes.img} src={Ancient} alt="Ancient Map" />
+        </div>
       </div>
-      <div className={classes.image}>
-        <img className={classes.img} src={Nuke} alt="Nuke Map" />
+      <div className={classes.position}>
+        <div className={classes.imageNuke}>
+          <img className={classes.img} src={Nuke} alt="Nuke Map" />
+        </div>
       </div>
-      <div className={classes.image}>
-        <img className={classes.img} src={Vertigo} alt="Vertigo Map" />
+      <div className={classes.position}>
+        <div className={classes.imageVertigo}>
+          <img className={classes.img} src={Vertigo} alt="Vertigo Map" />
+        </div>
       </div>
-      <div className={classes.image}>
-        <img className={classes.img} src={Anubis} alt="Anubis Map" />
+      <div className={classes.position}>
+        <div className={classes.imageAnubis}>
+          <img className={classes.img} src={Anubis} alt="Anubis Map" />
+        </div>
       </div>
     </div>
   );
