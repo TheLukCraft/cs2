@@ -1,6 +1,7 @@
 .flex {
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 
 .container {
@@ -24,7 +25,7 @@
   }
 
   .container {
-    width: 100vw;
+    width: 80vw;
     text-align: center;
     border-radius: 0.8rem;
   }
@@ -32,7 +33,7 @@
 
 @media (min-width: 769px) {
   .container {
-    width: 100vw;
+    width: 80vw;
   }
 }
 
