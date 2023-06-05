@@ -1,16 +1,8 @@
-.container {
-  display: grid;
-  column-gap: 1.5rem;
-  row-gap: 1.5rem;
-  max-width: 74rem;
-  margin: 0 auto;
-  grid-template-columns: 1fr 1fr;
-}
-
-.image {
+.position {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .img:hover {
@@ -19,48 +11,125 @@
   transition: 0.3s;
 }
 
-.img {
-  height: 20rem;
-  width: 35rem;
+.imageMirage:hover::after {
+  content: "Mirage";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
 }
 
-@media screen and (max-width: 424px) {
+.imageInferno:hover::after {
+  content: "Inferno";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.imageOverpass:hover::after {
+  content: "Overpass";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.imageAncient:hover::after {
+  content: "Ancient";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.imageNuke:hover::after {
+  content: "Nuke";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.imageVertigo:hover::after {
+  content: "Vertigo";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.imageAnubis:hover::after {
+  content: "Anubis";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+@media (max-width: 768px) {
   .container {
     display: block;
-    max-width: 12rem;
   }
 
   .image {
-    display: flex;
-    justify-content: center;
+    margin: 0.8rem 0 0.8rem;
   }
 
   .img {
-    height: 8rem;
-    width: 13.5rem;
-    margin: 0.8rem;
+    width: 18rem;
+    height: 13rem;
   }
 }
 
-@media screen and (min-width: 425px) and (max-width: 518px) {
-  .img {
-    height: 12rem;
-    width: 20rem;
-  }
-}
-
-@media screen and (min-width: 518px) and (max-width: 768px) {
-  .img {
-    height: 16rem;
-    width: 25rem;
-  }
-}
-
-@media screen and (max-width: 1225px) {
+@media screen and (min-width: 769px) and (max-width: 1023px) {
   .container {
     display: block;
   }
+
+  .image {
+    margin: 0.8rem;
+  }
+
   .img {
-    margin: 1rem;
+    width: 26rem;
+    height: 18rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    display: grid;
+    column-gap: 0.3rem;
+    row-gap: 1.5rem;
+    max-width: 74rem;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .img {
+    width: 26rem;
+    height: 16rem;
   }
 }
