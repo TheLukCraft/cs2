@@ -143,7 +143,16 @@ namespace WebAPI.Controllers.V1
         public async Task<IActionResult> LoginAsync(LoginModel login)
         {
             var user = await userManager.FindByNameAsync(login.UserName);
-            if (user != null && await userManager.CheckPasswordAsync(user, login.Password))
+
+            if (user == null)
+            {
+                return NotFound(new Response<bool>
+                {
+                    Succeeded = false,
+                    Message = "User not found."
+                });
+            }
+            else if (user != null && await userManager.CheckPasswordAsync(user, login.Password))
             {
                 var authClaims = new List<Claim>
                 {
@@ -172,7 +181,11 @@ namespace WebAPI.Controllers.V1
                     Expiration = token.ValidTo
                 });
             }
-            return Unauthorized();
+            else return Unauthorized(new Response<bool>
+            {
+                Succeeded = false,
+                Message = "Incorrect password."
+            });
         }
     }
 }
