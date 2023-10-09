@@ -84,12 +84,9 @@ namespace WebAPI.Controllers.V1
         /// Asynchronously registers an admin user.
         /// </summary>
         /// <param name="register">Registration data for the admin user.</param>
-        /// <returns>
-        /// An IActionResult with an HTTP response containing information about the registration result:
-        /// - Status 409 (Conflict) if the admin user already exists.
-        /// - Status 400 (Bad Request) if the registration fails due to validation errors.
-        /// - Status 200 (OK) if the admin user registration is successful.
-        /// </returns>
+        /// <response code="409">(Conflict) if the admin user already exists.</response>
+        /// <response code="400">(Bad Request) if the registration fails due to validation errors.</response>
+        /// <response code="200">(OK) if the admin user registration is successful.</response>
         [HttpPost()]
         [Route("RegisterAdmin")]
         public async Task<IActionResult> RegisterAdminAsync(RegisterModel register)
