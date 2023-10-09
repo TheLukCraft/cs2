@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.OData;
 using Application.Services;
 using WebAPI.Middelwares;
 using FluentValidation;
-using Application.Validators;
 using FluentValidation.AspNetCore;
+using Application.Validators.Post;
 
 namespace WebAPI.Installers
 {
