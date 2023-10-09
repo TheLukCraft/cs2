@@ -47,7 +47,6 @@ namespace WebAPI.Controllers.V1
         /// <param name="postId">The unique identifier of the post associated with the attachment.</param>
         /// <Response code="400">(Bad Request) if the user does not own the post.</Response>
         /// <Response code="404">(Not Found) if the attachment is not found.</Response>
-        [SwaggerOperation(Summary = "Donwload a specific attachment by unique id")]
         [HttpGet("{postId}/{id}")]
         public async Task<IActionResult> DownloadAsync(int id, int postId)
         {
@@ -69,7 +68,6 @@ namespace WebAPI.Controllers.V1
         /// <param name="file">The attachment file to be added.</param>
         /// <Response code="400">(Bad Request) if the post does not exist or the user does not own the post.</Response>
         /// <Response code="201">(Created) with the attachment details if the attachment is successfully added.</Response>
-        [SwaggerOperation(Summary = "Add a new attachment to post")]
         [HttpPost("{postId}")]
         public async Task<IActionResult> AddToPostAsync(int postId, IFormFile file)
         {
@@ -92,7 +90,6 @@ namespace WebAPI.Controllers.V1
         /// <param name="postId">The unique identifier of the post associated with the attachment.</param>
         /// <Response code="400">(Bad Request) if the user does not own the post.</Response>
         /// <Response code="204"> (No Content) if the attachment is successfully deleted.</Response>
-        [SwaggerOperation(Summary = "Delete a specific attachment")]
         [HttpDelete("{postId}/{id}")]
         public async Task<IActionResult> DeleteAsync(int id, int postId)
         {

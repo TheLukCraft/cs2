@@ -1,11 +1,8 @@
-﻿using Application.Dto;
-using Application.Dto.Picture;
-using Application.Dto.Post;
+﻿using Application.Dto.Picture;
 using Application.Interfaces;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 using WebAPI.Wrappers;
 
@@ -26,7 +23,11 @@ namespace WebAPI.Controllers.V1
             this.postService = postService;
         }
 
-        [SwaggerOperation(Summary = "Retrieves a picture by unique post id")]
+        /// <summary>
+        /// Retrieves pictures associated with a unique post ID asynchronously.
+        /// </summary>
+        /// <param name="postId">The unique identifier of the post.</param>
+        /// <response code="200">(OK) with the collection of pictures if retrieval is successful.</response>
         [HttpGet("[action]/{postId}")]
         public async Task<IActionResult> GetByPostIdAsync(int postId)
         {
@@ -34,7 +35,12 @@ namespace WebAPI.Controllers.V1
             return Ok(new Response<IEnumerable<PictureDto>>(pictures));
         }
 
-        [SwaggerOperation(Summary = "Retrieves a specific picture by unique id")]
+        /// <summary>
+        /// Retrieves a specific picture by its unique ID asynchronously.
+        /// </summary>
+        /// <param name="id">The unique identifier of the picture to retrieve.</param>
+        /// <response code="404">(Not Found) if the picture with the specified ID does not exist.</response>
+        /// <reponse code="200">(OK) with the PictureDto object if the retrieval is successful.</reponse>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
@@ -45,7 +51,14 @@ namespace WebAPI.Controllers.V1
             return Ok(new Response<PictureDto>(picture));
         }
 
-        [SwaggerOperation(Summary = "Add a new picture to a post")]
+        /// <summary>
+        /// Adds a new picture to a post asynchronously.
+        /// </summary>
+        /// <param name="postId">The unique identifier of the post to which the picture will be added.</param>
+        /// <param name="file">The picture file to be added.</param>
+        /// <response code="401">(Bad Request) if the post does not exist.</response>
+        /// <response code="400">(Bad Request) if the user does not own the post.</response>
+        /// <response code="201"> (Created) with the PictureDto object if the picture is successfully added.</response>
         [HttpPost("{postId}")]
         public async Task<IActionResult> AddToPostAsync(int postId, IFormFile file)
         {
@@ -65,7 +78,13 @@ namespace WebAPI.Controllers.V1
             return Created($"pictures/{picture.Id}", new Response<PictureDto>(picture));
         }
 
-        [SwaggerOperation(Summary = "Sets the main picture of the post")]
+        /// <summary>
+        /// Sets the main picture of a post asynchronously.
+        /// </summary>
+        /// <param name="postId">The unique identifier of the post for which the main picture will be set.</param>
+        /// <param name="id">The unique identifier of the picture to be set as the main picture.</param>
+        /// <response code="400">(Bad Request) if the user does not own the post.</response>
+        /// <response code="204">(No Content) if the main picture is successfully set.</response>
         [HttpPut("[action]/{postId}/{id}")]
         public async Task<IActionResult> SetMainPictureAsync(int postId, int id)
         {
@@ -77,7 +96,12 @@ namespace WebAPI.Controllers.V1
             return NoContent();
         }
 
-        [SwaggerOperation(Summary = "Update a specific picture")]
+        /// <summary>
+        /// Updates a specific picture asynchronously.
+        /// </summary>
+        /// <param name="updatePicture">The UpdatePictureDto object containing the updated details of the picture.</param>
+        /// <response code="400">(Bad Request) if the user does not own the post associated with the picture.</response>
+        /// <response code="204"> (No Content) if the picture is successfully updated.</response>
         [HttpPut()]
         public async Task<IActionResult> UpdateAsync(UpdatePictureDto updatePicture)
         {
@@ -89,7 +113,13 @@ namespace WebAPI.Controllers.V1
             return NoContent();
         }
 
-        [SwaggerOperation(Summary = "Delete a specific picture")]
+        /// <summary>
+        /// Deletes a specific picture by its unique ID asynchronously.
+        /// </summary>
+        /// <param name="id">The unique identifier of the picture to delete.</param>
+        /// <param name="postId">The unique identifier of the post associated with the picture.</param>
+        /// <response code="400">(Bad Request) if the user does not own the post associated with the picture.</response>
+        /// <response code="204"> (No Content) if the picture is successfully deleted.</response>
         [HttpDelete("{postId}/{id}")]
         public async Task<IActionResult> DeleteAsync(int id, int postId)
         {
