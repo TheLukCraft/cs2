@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Infrastructure.Identity;
 using Application.Dto.Post;
-using Application.Validators;
 using WebAPI.Attributes;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.Extensions.Caching.Memory;
+using Application.Validators.Post;
 
 namespace WebAPI.Controllers.V1
 {

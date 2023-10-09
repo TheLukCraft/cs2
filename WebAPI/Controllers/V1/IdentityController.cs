@@ -33,12 +33,9 @@ namespace WebAPI.Controllers.V1
         /// Asynchronously registers a user.
         /// </summary>
         /// <param name="register">Registration data for the user.</param>
-        /// <returns>
-        /// An IActionResult with an HTTP response containing information about the registration result:
-        /// - Status 409 (Conflict) if the user already exists.
-        /// - Status 400 (Bad Request) if the registration fails due to validation errors.
-        /// - Status 200 (OK) if the registration is successful.
-        /// </returns>
+        /// <response code="409">(Conflict) if the user already exists.</response>
+        /// <response code="400">(Bad Request) if the registration fails due to validation errors.</response>
+        /// <response code="200">(OK) if the registration is successful.</response>
         [HttpPost()]
         [Route("Register")]
         public async Task<IActionResult> RegisterAsync(RegisterModel register)
@@ -139,11 +136,8 @@ namespace WebAPI.Controllers.V1
         /// Asynchronously handles user login.
         /// </summary>
         /// <param name="login">Login credentials for the user.</param>
-        /// <returns>
-        /// An IActionResult with an HTTP response containing:
-        /// - Status 200 (OK) and a JWT token if the login is successful.
-        /// - Status 401 (Unauthorized) if the login fails.
-        /// </returns>
+        /// <Response code="200">(OK) and a JWT token if the login is successful.</Response>
+        /// <Response code="401">(Unauthorized) if the login fails.</Response>
         [HttpPost()]
         [Route("Login")]
         public async Task<IActionResult> LoginAsync(LoginModel login)
