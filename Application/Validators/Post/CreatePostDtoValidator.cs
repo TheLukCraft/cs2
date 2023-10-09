@@ -1,7 +1,7 @@
 ﻿using Application.Dto.Post;
 using FluentValidation;
 
-namespace Application.Validators
+namespace Application.Validators.Post
 {
     public class CreatePostDtoValidator : AbstractValidator<CreatePostDto>
     {
