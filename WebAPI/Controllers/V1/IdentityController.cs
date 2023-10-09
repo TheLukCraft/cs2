@@ -29,6 +29,16 @@ namespace WebAPI.Controllers.V1
             this.emailSenderService = emailSenderService;
         }
 
+        /// <summary>
+        /// Asynchronously registers a user.
+        /// </summary>
+        /// <param name="register">Registration data for the user.</param>
+        /// <returns>
+        /// An IActionResult with an HTTP response containing information about the registration result:
+        /// - Status 409 (Conflict) if the user already exists.
+        /// - Status 400 (Bad Request) if the registration fails due to validation errors.
+        /// - Status 200 (OK) if the registration is successful.
+        /// </returns>
         [HttpPost()]
         [Route("Register")]
         public async Task<IActionResult> RegisterAsync(RegisterModel register)
@@ -73,6 +83,16 @@ namespace WebAPI.Controllers.V1
             });
         }
 
+        /// <summary>
+        /// Asynchronously registers an admin user.
+        /// </summary>
+        /// <param name="register">Registration data for the admin user.</param>
+        /// <returns>
+        /// An IActionResult with an HTTP response containing information about the registration result:
+        /// - Status 409 (Conflict) if the admin user already exists.
+        /// - Status 400 (Bad Request) if the registration fails due to validation errors.
+        /// - Status 200 (OK) if the admin user registration is successful.
+        /// </returns>
         [HttpPost()]
         [Route("RegisterAdmin")]
         public async Task<IActionResult> RegisterAdminAsync(RegisterModel register)
@@ -115,6 +135,15 @@ namespace WebAPI.Controllers.V1
             });
         }
 
+        /// <summary>
+        /// Asynchronously handles user login.
+        /// </summary>
+        /// <param name="login">Login credentials for the user.</param>
+        /// <returns>
+        /// An IActionResult with an HTTP response containing:
+        /// - Status 200 (OK) and a JWT token if the login is successful.
+        /// - Status 401 (Unauthorized) if the login fails.
+        /// </returns>
         [HttpPost()]
         [Route("Login")]
         public async Task<IActionResult> LoginAsync(LoginModel login)
