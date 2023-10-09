@@ -32,14 +32,23 @@ namespace WebAPI.Controllers.V1
             this.logger = logger;
         }
 
-        [SwaggerOperation(Summary = "Retrieves sort fields")]
+        /// <summary>
+        /// Retrieves available sort fields asynchronously.
+        /// </summary>
+        /// <response code="200">(OK) with a collection of available sort field names if the retrieval is successful.</response>
         [HttpGet("[action]")]
         public IActionResult GetSortFieldsAsync()
         {
             return Ok(SortingHelper.GetSortField().Select(x => x.Key));
         }
 
-        [SwaggerOperation(Summary = "Retrieves paged posts")]
+        /// <summary>
+        /// Retrieves paged posts asynchronously based on pagination, sorting, and filtering criteria.
+        /// </summary>
+        /// <param name="paginationFilter">The pagination filter specifying the page number and page size.</param>
+        /// <param name="sortingFilter">The sorting filter specifying the field to sort by and the sorting order.</param>
+        /// <param name="filterBy">The optional filter criteria to apply to the posts.</param>
+        /// <response code="200">(OK) with a paged collection of PostDto objects if the retrieval is successful.</response>
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] PaginationFilter paginationFilter, [FromQuery] SortingFilter sortingFilter, [FromQuery] string filterBy = "")
@@ -54,7 +63,10 @@ namespace WebAPI.Controllers.V1
             return Ok(PaginationHelper.CreatePagedResponse(posts, validPaginationFilter, totalRecords));
         }
 
-        [SwaggerOperation(Summary = "Retrieves all posts")]
+        /// <summary>
+        /// Retrieves all posts asynchronously.
+        /// </summary>
+        /// <response code="200">(OK) with a collection of PostDto objects if the retrieval is successful.</response>
         [Authorize(Roles = UserRoles.Admin)]
         [EnableQuery]
         [HttpGet("[action]")]
@@ -74,7 +86,12 @@ namespace WebAPI.Controllers.V1
             return Ok(posts);
         }
 
-        [SwaggerOperation(Summary = "Retrieves a specific post by unique id")]
+        /// <summary>
+        /// Retrieves a specific post by its unique ID asynchronously.
+        /// </summary>
+        /// <param name="id">The unique identifier of the post to retrieve.</param>
+        /// <response code="404">(Not Found) if the post with the specified ID does not exist.</response>
+        /// <response code="200">(OK) with the PostDto object if the retrieval is successful.</response>
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
@@ -86,8 +103,13 @@ namespace WebAPI.Controllers.V1
             return Ok(new Response<PostDto>(post));
         }
 
+        /// <summary>
+        /// Creates a new post asynchronously.
+        /// </summary>
+        /// <param name="newPost">The CreatePostDto object containing the details of the new post.</param>
+        /// <response code="400">(Bad Request) if there are validation errors in the provided data.</response>
+        /// <response code="201">(Created) with the PostDto object if the post is successfully created.</response>
         [ValidateFilter]
-        [SwaggerOperation(Summary = "Create a new post")]
         [Authorize(Roles = UserRoles.User)]
         [HttpPost()]
         public async Task<IActionResult> Create(CreatePostDto newPost)
@@ -108,7 +130,12 @@ namespace WebAPI.Controllers.V1
             return Created($"posts/{post.Id}", new Response<PostDto>(post));
         }
 
-        [SwaggerOperation(Summary = "Update a existing post")]
+        /// <summary>
+        /// Updates an existing post asynchronously.
+        /// </summary>
+        /// <param name="updatePost">The UpdatePostDto object containing the updated details of the post.</param>
+        /// <reseponse code="400"> (Bad Request) if the user does not own the post.</reseponse>
+        /// <response code="204">(No Content) if the post is successfully updated.</response>
         [Authorize(Roles = UserRoles.User)]
         [HttpPut()]
         public async Task<IActionResult> UpdateAsync(UpdatePostDto updatePost)
@@ -121,7 +148,12 @@ namespace WebAPI.Controllers.V1
             return NoContent();
         }
 
-        [SwaggerOperation(Summary = "Delete a specific post")]
+        /// <summary>
+        /// Deletes a specific post by its unique ID asynchronously.
+        /// </summary>
+        /// <param name="id">The unique identifier of the post to delete.</param>
+        /// <response code="400"> (Bad Request) if the user is neither an admin nor the owner of the post.</response>
+        /// <response code="204">(No Content) if the post is successfully deleted.</response>
         [Authorize(Roles = UserRoles.AdminOrUser)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
