@@ -1,15 +1,44 @@
 .flex {
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 
 .container {
   width: 60vw;
   box-shadow: 0.5rem 0.5rem 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
-  background-color: rgba(22, 33, 43, 0.5);
+  background-color: rgba(38, 65, 90, 0.5);
   background-size: cover;
   margin: 2rem;
   padding: 2rem;
   text-align: center;
   border-radius: 0.8rem;
+}
+
+.title {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .flex {
+    margin: 0;
+  }
+
+  .container {
+    width: 80vw;
+    text-align: center;
+    border-radius: 0.8rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .container {
+    width: 80vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    width: 70vw;
+  }
 }

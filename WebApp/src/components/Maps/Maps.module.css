@@ -1,11 +1,7 @@
-.container {
-  margin: 1rem;
+.position {
   display: flex;
   justify-content: center;
-  text-align: center;
-}
-
-.img {
+  align-items: center;
   position: relative;
 }
 
@@ -15,34 +11,125 @@
   transition: 0.3s;
 }
 
-/* .imageMirage {
-  position: relative;
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  background-color: rgb(230, 104, 21);
-  transition: filter 0.3s;
-}
-
-.imageMirage:hover {
-  filter: brightness(70%);
-}
-
 .imageMirage:hover::after {
   content: "Mirage";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: white;
-}  */
+  color: rgb(255, 255, 255);
+}
 
+.imageInferno:hover::after {
+  content: "Inferno";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
 
+.imageOverpass:hover::after {
+  content: "Overpass";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
 
-.img {
-  height: 14.5rem;
-  width: 25rem;
-  margin: 2rem;
+.imageAncient:hover::after {
+  content: "Ancient";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.imageNuke:hover::after {
+  content: "Nuke";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.imageVertigo:hover::after {
+  content: "Vertigo";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.imageAnubis:hover::after {
+  content: "Anubis";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+@media (max-width: 768px) {
+  .container {
+    display: block;
+  }
+
+  .image {
+    margin: 0.8rem 0 0.8rem;
+  }
+
+  .img {
+    width: 18rem;
+    height: 13rem;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  .container {
+    display: block;
+  }
+
+  .image {
+    margin: 0.8rem;
+  }
+
+  .img {
+    width: 26rem;
+    height: 18rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    display: grid;
+    column-gap: 0.3rem;
+    row-gap: 1.5rem;
+    max-width: 74rem;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .img {
+    width: 26rem;
+    height: 16rem;
+  }
 }
