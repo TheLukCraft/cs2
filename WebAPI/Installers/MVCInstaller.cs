@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
 using Application.Services;
 using WebAPI.Middelwares;
-using FluentValidation;
 using FluentValidation.AspNetCore;
+using Swashbuckle.AspNetCore.Filters;
+using Application.Validators.Attachments;
+using Application.Validators.Map;
+using Application.Validators.Picture;
 using Application.Validators.Post;
 
 namespace WebAPI.Installers
@@ -23,10 +26,20 @@ namespace WebAPI.Installers
             .Select()
             .Filter()
             .OrderBy());
-            services.AddFluentValidation(options =>
-            {
-                options.RegisterValidatorsFromAssemblyContaining<CreatePostDtoValidator>();
-            });
+
+            //Attachments
+            services.AddSwaggerExamplesFromAssemblyOf<AttachmentDtoValidator>();
+            services.AddSwaggerExamplesFromAssemblyOf<DownloadAttachmentDtoValidator>();
+            //Map
+            services.AddSwaggerExamplesFromAssemblyOf<CreateMapDtoValidator>();
+            services.AddSwaggerExamplesFromAssemblyOf<UpdateMapDtoValidator>();
+            //Picture
+            services.AddSwaggerExamplesFromAssemblyOf<PictureDtoValidator>();
+            services.AddSwaggerExamplesFromAssemblyOf<UpdatePictureDtoValidator>();
+            //Post
+            services.AddSwaggerExamplesFromAssemblyOf<CreatePostDtoValidator>();
+            services.AddSwaggerExamplesFromAssemblyOf<UpdatePostDtoValidator>();
+
             services.AddApiVersioning(x =>
             {
                 x.DefaultApiVersion = new ApiVersion(1, 0);

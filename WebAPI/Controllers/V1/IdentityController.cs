@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebAPI.Models;
+using WebAPI.SwaggerExamples.Responses;
 using WebAPI.Wrappers;
 
 namespace WebAPI.Controllers.V1
@@ -33,9 +34,11 @@ namespace WebAPI.Controllers.V1
         /// Asynchronously registers a user.
         /// </summary>
         /// <param name="register">Registration data for the user.</param>
+        /// <response code="500">(InternalServerError) User already exists!</response>
         /// <response code="409">(Conflict) if the user already exists.</response>
         /// <response code="400">(Bad Request) if the registration fails due to validation errors.</response>
         /// <response code="200">(OK) if the registration is successful.</response>
+        [ProducesResponseType(typeof(RegisterResponseStatus200Example), StatusCodes.Status200OK)]
         [HttpPost()]
         [Route("Register")]
         public async Task<IActionResult> RegisterAsync(RegisterModel register)
@@ -43,7 +46,7 @@ namespace WebAPI.Controllers.V1
             var userExists = await userManager.FindByNameAsync(register.UserName);
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status409Conflict, new Response<bool>
+                return StatusCode(StatusCodes.Status409Conflict, new Response
                 {
                     Succeeded = false,
                     Message = "User already exists!"
@@ -73,7 +76,7 @@ namespace WebAPI.Controllers.V1
 
             await emailSenderService.SendAsync(user.Email, "Registration confirmation", EmailTemplate.WelcomeMessage, user);
 
-            return Ok(new Response<bool>
+            return Ok(new Response
             {
                 Succeeded = true,
                 Message = "User created successfully!"
@@ -94,7 +97,7 @@ namespace WebAPI.Controllers.V1
             var userExists = await userManager.FindByNameAsync(register.UserName);
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status409Conflict, new Response<bool>
+                return StatusCode(StatusCodes.Status409Conflict, new Response
                 {
                     Succeeded = false,
                     Message = "User already exists!"
@@ -122,7 +125,7 @@ namespace WebAPI.Controllers.V1
 
             await userManager.AddToRoleAsync(user, UserRoles.Admin);
 
-            return Ok(new Response<bool>
+            return Ok(new Response
             {
                 Succeeded = true,
                 Message = "User created successfully!"
@@ -143,7 +146,7 @@ namespace WebAPI.Controllers.V1
 
             if (user == null)
             {
-                return NotFound(new Response<bool>
+                return NotFound(new Response
                 {
                     Succeeded = false,
                     Message = "User not found."
@@ -178,7 +181,7 @@ namespace WebAPI.Controllers.V1
                     Expiration = token.ValidTo
                 });
             }
-            else return Unauthorized(new Response<bool>
+            else return Unauthorized(new Response
             {
                 Succeeded = false,
                 Message = "Incorrect password."

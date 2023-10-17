@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
 namespace WebAPI.Installers
@@ -12,7 +12,8 @@ namespace WebAPI.Installers
             services.AddSwaggerGen(c =>
             {
                 c.EnableAnnotations();
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CSGO2 API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CS2 API", Version = "v1" });
+                c.ExampleFilters();
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -40,6 +41,7 @@ namespace WebAPI.Installers
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
                 c.IncludeXmlComments(xmlPath);
             });
+            //services.AddSwaggerExamplesFromAssemblies<Startup>();
         }
     }
 }
